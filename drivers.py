@@ -21,16 +21,17 @@ def create_driver(config: TestConfig) -> WebDriver:
     raise ValueError("DEVICE_HOST: emulator, real, selenoid, browserstack")
 
 
-def _android_base(config: TestConfig) -> UiAutomator2Options:
+def _android_base(config: TestConfig, *, with_package: bool) -> UiAutomator2Options:
     options = UiAutomator2Options()
     options.platform_name = "Android"
     options.automation_name = "UiAutomator2"
     options.auto_grant_permissions = True
     options.no_reset = False
     options.new_command_timeout = 120
-    options.app_wait_activity = "*"
-    options.app_package = config.app_package
+    options.app_wait_activity = "org.wikipedia.*"
     options.app_activity = config.app_activity
+    if with_package:
+        options.app_package = config.app_package
     return options
 
 
@@ -41,7 +42,7 @@ def _local(config: TestConfig) -> UiAutomator2Options:
         raise FileNotFoundError(
             f"APK not found: {app}. Download Wikipedia alpha to ANDROID_APP="
         )
-    options = _android_base(config)
+    options = _android_base(config, with_package=True)
     options.app = str(path.resolve())
     options.set_capability("appium:ignoreHiddenApiPolicyError", True)
     return options
@@ -50,7 +51,8 @@ def _local(config: TestConfig) -> UiAutomator2Options:
 def _selenoid(config: TestConfig) -> UiAutomator2Options:
     if not config.android_app:
         raise ValueError("Set ANDROID_APP to an APK URL for Selenoid")
-    options = _android_base(config)
+    # Selenoid routes on browserName=android. Appium inside rejects appPackage+browserName.
+    options = _android_base(config, with_package=False)
     options.set_capability("browserName", "android")
     options.set_capability("browserVersion", config.platform_version or "13.0")
     options.device_name = "android"
@@ -68,7 +70,7 @@ def _browserstack(config: TestConfig) -> UiAutomator2Options:
     app = config.browserstack_app or config.android_app
     if not app:
         raise ValueError("Set BROWSERSTACK_APP=bs://…")
-    options = _android_base(config)
+    options = _android_base(config, with_package=True)
     options.app = app
     options.device_name = config.device_name
     options.platform_version = config.platform_version
