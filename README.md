@@ -10,6 +10,8 @@ This lesson is BrowserStack only. Emulator / real device — next lesson.
 | [`driver`](https://github.com/qa-guru/python-appium/tree/driver) | `BrowserstackDriver` + pytest fixture |
 | [`attachments`](https://github.com/qa-guru/python-appium/tree/attachments) | Allure screenshot / page source / video |
 
+After the test: Allure screenshot, page source, BrowserStack video (`helpers/attach.py`).
+
 Caps live in `drivers/browserstack.py`. Keys come from the environment, not from the test.
 
 ```bash
