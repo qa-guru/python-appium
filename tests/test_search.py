@@ -5,14 +5,14 @@ from appium.webdriver.common.appiumby import AppiumBy
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
+from conftest import SEARCH_LOCS, first_visible
+
 
 @allure.title("successfulSearchTest")
 def test_successful_search(driver, config):
     wait = WebDriverWait(driver, config.timeout)
     with allure.step("Type search"):
-        wait.until(
-            EC.element_to_be_clickable((AppiumBy.ACCESSIBILITY_ID, "Search Wikipedia"))
-        ).click()
+        first_visible(driver, SEARCH_LOCS, config.timeout).click()
         field = wait.until(
             EC.visibility_of_element_located(
                 (AppiumBy.ID, "org.wikipedia.alpha:id/search_src_text")
