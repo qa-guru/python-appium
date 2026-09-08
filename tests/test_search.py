@@ -27,8 +27,9 @@ def test_successful_search():
     options.set_capability("app", "bs://c700ce60cf13ae8ed97705a55b8e022f13c5827c")
 
     # Specify device and os_version for testing
-    options.set_capability("device", "Google Pixel 3")
-    options.set_capability("os_version", "9.0")
+    options.set_capability("platformName", "android")
+    options.set_capability("deviceName", "Google Pixel 3")
+    options.set_capability("platformVersion", "9.0")
 
     # Set other BrowserStack capabilities
     options.set_capability("project", "First Python Project")
