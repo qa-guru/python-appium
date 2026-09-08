@@ -1,7 +1,6 @@
 """BrowserStack App Automate sample — Wikipedia search.
 
-Paste your user / key / bs:// app id. Same shape as
-qa-guru/mobile-tests-22 SearchTests (first commit).
+Same shape as qa-guru/mobile-tests-22 SearchTests (first commit).
 """
 
 import time
@@ -17,11 +16,11 @@ def test_successful_search():
     options = UiAutomator2Options()
 
     # Set your access credentials
-    options.set_capability("browserstack.user", "YOUR_USERNAME")
-    options.set_capability("browserstack.key", "YOUR_ACCESS_KEY")
+    options.set_capability("browserstack.user", "qaguru_ti9G5S")
+    options.set_capability("browserstack.key", "5yrxu4nFTKkRExUAhqxh")
 
     # Set URL of the application under test
-    options.set_capability("app", "bs://<app-id>")
+    options.set_capability("app", "bs://c700ce60cf13ae8ed97705a55b8e022f13c5827c")
 
     # Specify device and os_version for testing
     options.set_capability("device", "Google Pixel 3")

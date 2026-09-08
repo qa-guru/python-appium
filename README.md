@@ -10,7 +10,7 @@ This lesson is BrowserStack only. Emulator / real device — next lesson.
 | [`driver`](https://github.com/qa-guru/python-appium/tree/driver) | `BrowserstackDriver` + pytest fixture |
 | [`attachments`](https://github.com/qa-guru/python-appium/tree/attachments) | Allure screenshot / page source / video |
 
-Paste your [BrowserStack](https://www.browserstack.com/accounts/settings) user, key and `bs://…` app id into `tests/test_search.py` (same as the Java first commit). Sample APK: [WikipediaSample.apk](https://www.browserstack.com/app-automate/sample-apps/android/WikipediaSample.apk).
+Same credentials and Wikipedia `bs://` as [mobile-tests-22](https://github.com/qa-guru/mobile-tests-22) first commit. Sample APK: [WikipediaSample.apk](https://www.browserstack.com/app-automate/sample-apps/android/WikipediaSample.apk).
 
 ```bash
 python3 -m venv .venv
