@@ -10,9 +10,12 @@ This lesson is BrowserStack only. Emulator / real device — next lesson.
 | [`driver`](https://github.com/qa-guru/python-appium/tree/driver) | `BrowserstackDriver` + pytest fixture |
 | [`attachments`](https://github.com/qa-guru/python-appium/tree/attachments) | Allure screenshot / page source / video |
 
-Paste your [BrowserStack](https://www.browserstack.com/accounts/settings) user, key and `bs://…` app id into `tests/test_search.py` (same as the Java first commit). Sample APK: [WikipediaSample.apk](https://www.browserstack.com/app-automate/sample-apps/android/WikipediaSample.apk).
+Caps live in `drivers/browserstack.py`. Keys come from the environment, not from the test.
 
 ```bash
+cp .env.example .env
+# fill BROWSERSTACK_USERNAME / BROWSERSTACK_ACCESS_KEY / BROWSERSTACK_APP
+
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
