@@ -1,9 +1,3 @@
-"""BrowserStack App Automate sample — Wikipedia search.
-
-Same shape as qa-guru/mobile-tests-22 SearchTests (first commit).
-Appium-Python-Client 4 needs user:key in the hub URL (W3C).
-"""
-
 import time
 
 from appium import webdriver
@@ -12,8 +6,9 @@ from appium.webdriver.common.appiumby import AppiumBy
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
-USER = "qaguru_ti9G5S"
-KEY = "5yrxu4nFTKkRExUAhqxh"
+# todo bad practice - move from public repo (to .properties / ci secrets
+USER = "yvikbrwprpkpbzor_L2F1zU"
+KEY = "xuyDnBxEyiwqe8i55ZT6"
 
 
 def test_successful_search():
@@ -24,12 +19,12 @@ def test_successful_search():
     options.set_capability("browserstack.key", KEY)
 
     # Set URL of the application under test
-    options.set_capability("app", "bs://c700ce60cf13ae8ed97705a55b8e022f13c5827c")
+    options.set_capability("app", "bs://sample.app")
 
     # Specify device and os_version for testing
     options.set_capability("platformName", "android")
-    options.set_capability("deviceName", "Google Pixel 3")
-    options.set_capability("platformVersion", "9.0")
+    options.set_capability("deviceName", "Samsung Galaxy S22 Ultra")
+    options.set_capability("platformVersion", "12.0")
 
     # Set other BrowserStack capabilities
     options.set_capability("project", "First Python Project")
