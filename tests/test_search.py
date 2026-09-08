@@ -1,6 +1,7 @@
 """BrowserStack App Automate sample — Wikipedia search.
 
 Same shape as qa-guru/mobile-tests-22 SearchTests (first commit).
+Appium-Python-Client 4 needs user:key in the hub URL (W3C).
 """
 
 import time
@@ -11,13 +12,16 @@ from appium.webdriver.common.appiumby import AppiumBy
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
+USER = "qaguru_ti9G5S"
+KEY = "5yrxu4nFTKkRExUAhqxh"
+
 
 def test_successful_search():
     options = UiAutomator2Options()
 
     # Set your access credentials
-    options.set_capability("browserstack.user", "qaguru_ti9G5S")
-    options.set_capability("browserstack.key", "5yrxu4nFTKkRExUAhqxh")
+    options.set_capability("browserstack.user", USER)
+    options.set_capability("browserstack.key", KEY)
 
     # Set URL of the application under test
     options.set_capability("app", "bs://c700ce60cf13ae8ed97705a55b8e022f13c5827c")
@@ -31,7 +35,10 @@ def test_successful_search():
     options.set_capability("build", "browserstack-build-1")
     options.set_capability("name", "first_test")
 
-    driver = webdriver.Remote("https://hub.browserstack.com/wd/hub", options=options)
+    driver = webdriver.Remote(
+        f"https://{USER}:{KEY}@hub.browserstack.com/wd/hub",
+        options=options,
+    )
 
     search_element = WebDriverWait(driver, 30).until(
         EC.element_to_be_clickable((AppiumBy.ACCESSIBILITY_ID, "Search Wikipedia"))
