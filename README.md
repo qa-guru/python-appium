@@ -1,6 +1,8 @@
 # python-appium
 
-Python twin of [qa-guru/mobile-tests-22](https://github.com/qa-guru/mobile-tests-22). **pytest + Appium-Python-Client**, no Selene.
+Python twin of [qa-guru/java-appium](https://github.com/qa-guru/java-appium). **pytest + Appium-Python-Client**, no Selene.
+
+Historical Java stream: [mobile-tests-22](https://github.com/qa-guru/mobile-tests-22).
 
 This lesson is BrowserStack only. Emulator / real device — next lesson.
 
@@ -10,7 +12,7 @@ This lesson is BrowserStack only. Emulator / real device — next lesson.
 | [`driver`](https://github.com/qa-guru/python-appium/tree/driver) | `BrowserstackDriver` + pytest fixture |
 | [`attachments`](https://github.com/qa-guru/python-appium/tree/attachments) | Allure screenshot / page source / video |
 
-Jenkins: [python_mobile_tests](https://jenkins.qa.guru/job/python_mobile_tests/) @ `main`.
+Jenkins: [python_appium](https://jenkins.qa.guru/job/python_appium/) @ `main`. Java: [java_appium](https://jenkins.qa.guru/job/java_appium/).
 
 ```bash
 python3 -m venv .venv
