@@ -1,4 +1,10 @@
-# python-appium
+# python-appium · selenoid
+
+Not this BrowserStack lesson. This branch is the school farm ([python_mobile_tests](https://jenkins.qa.guru/job/python_mobile_tests/)). Emulator / real device — next lesson.
+
+This lesson's ladder: [`main`](https://github.com/qa-guru/python-appium/tree/main) → [`driver`](https://github.com/qa-guru/python-appium/tree/driver) → [`attachments`](https://github.com/qa-guru/python-appium/tree/attachments).
+
+---
 
 Python twin of [qa-guru/mobile-tests-22](https://github.com/qa-guru/mobile-tests-22): Wikipedia search on a device.
 
