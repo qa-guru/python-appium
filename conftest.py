@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import time
+
 import allure
 import pytest
 from appium.webdriver.common.appiumby import AppiumBy
@@ -15,6 +17,7 @@ SKIP_IDS = (
     "org.wikipedia.alpha:id/fragment_onboarding_skip_button",
     "org.wikipedia.alpha:id/fragment_onboarding_forward_button",
 )
+FORWARD = (AppiumBy.ACCESSIBILITY_ID, "Forward")
 SEARCH_LOCS = (
     (AppiumBy.ACCESSIBILITY_ID, "Search Wikipedia"),
     (AppiumBy.ID, "org.wikipedia.alpha:id/search_container"),
@@ -62,14 +65,28 @@ def first_visible(driver: WebDriver, locators: tuple, timeout: float):
 
 
 def _skip_wikipedia_onboarding(driver: WebDriver, timeout: float) -> None:
-    for _ in range(5):
-        clicked = False
+    for _ in range(6):
+        if _any_visible(driver, SEARCH_LOCS):
+            return
         for rid in SKIP_IDS:
             els = driver.find_elements(AppiumBy.ID, rid)
             if els and els[0].is_displayed():
                 els[0].click()
-                clicked = True
+                time.sleep(0.8)
                 break
-        if not clicked:
-            break
+        else:
+            fwd = driver.find_elements(*FORWARD)
+            if fwd:
+                fwd[0].click()
+                time.sleep(0.8)
+            else:
+                break
     first_visible(driver, SEARCH_LOCS, timeout)
+
+
+def _any_visible(driver: WebDriver, locators: tuple) -> bool:
+    for by, value in locators:
+        els = driver.find_elements(by, value)
+        if any(el.is_displayed() for el in els):
+            return True
+    return False
