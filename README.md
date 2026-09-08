@@ -26,6 +26,8 @@ Selenoid (same farm as [python_ui_tests](https://jenkins.qa.guru/job/python_ui_t
 DEVICE_HOST=selenoid pytest tests
 ```
 
+Jenkins uses the 2017 BrowserStack Wikipedia sample APK (same era as [mobile-tests-22](https://github.com/qa-guru/mobile-tests-22)), not the current Play Store build.
+
 Emulator (Appium on [`/wd/hub`](http://127.0.0.1:4723/wd/hub)):
 
 ```bash

@@ -10,8 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 WIKIPEDIA_APK = (
-    "https://github.com/wikimedia/apps-android-wikipedia"
-    "/releases/download/latest/app-alpha-universal-release.apk"
+    "https://www.browserstack.com/app-automate/sample-apps/android/WikipediaSample.apk"
 )
 
 
