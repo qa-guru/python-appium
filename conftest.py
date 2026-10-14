@@ -13,6 +13,45 @@ from config import TestConfig, load_config
 from drivers import create_driver
 from helpers import attach
 
+# iOS locator sets — accessibility-id / predicates instead of UiSelector.
+IOS_SEARCH_LOCS = (
+    # current iOS app: Search is a bottom tab bar item (name == "Search")
+    (AppiumBy.IOS_PREDICATE, 'name == "Search" AND type == "XCUIElementTypeButton"'),
+    (AppiumBy.ACCESSIBILITY_ID, "Search"),
+    (AppiumBy.ACCESSIBILITY_ID, "Search Wikipedia"),
+)
+IOS_FIELD_LOCS = (
+    (AppiumBy.CLASS_NAME, "XCUIElementTypeSearchField"),
+    (AppiumBy.CLASS_NAME, "XCUIElementTypeTextField"),
+)
+IOS_RESULT_LOCS = (
+    (AppiumBy.IOS_PREDICATE, 'label CONTAINS[c] "Appium"'),
+    (AppiumBy.CLASS_NAME, "XCUIElementTypeCell"),
+)
+IOS_SKIP_LOCS = (
+    (AppiumBy.ACCESSIBILITY_ID, "Skip"),
+    (AppiumBy.IOS_PREDICATE, 'label == "Skip"'),
+)
+IOS_FORWARD_LOCS = (
+    # onboarding buttons carry stable identifiers, e.g. "App Onboarding Next Button"
+    (
+        AppiumBy.IOS_PREDICATE,
+        'name BEGINSWITH "App Onboarding" AND type == "XCUIElementTypeButton"',
+    ),
+    (AppiumBy.ACCESSIBILITY_ID, "Next"),
+    (AppiumBy.ACCESSIBILITY_ID, "Continue"),
+    (AppiumBy.ACCESSIBILITY_ID, "Get started"),
+)
+
+
+def _is_ios(driver: WebDriver) -> bool:
+    return "ios" in str(driver.capabilities.get("platformName", "")).lower()
+
+
+def _pick(driver: WebDriver, android: tuple, ios: tuple) -> tuple:
+    return ios if _is_ios(driver) else android
+
+
 # Onboarding controls: the 2017 sample has fragment_onboarding_* ids, stable
 # Wikipedia renders Compose views — content-desc "Next", text "Skip".
 SKIP_LOCS = (
@@ -147,12 +186,20 @@ def dismiss_if_present(driver: WebDriver, locators: tuple, timeout: float = 5) -
     return False
 
 
-def has_elements(driver: WebDriver, locators: tuple) -> bool:
+def has_elements(driver: WebDriver, locators: tuple | None = None) -> bool:
+    locators = locators or _pick(driver, RESULT_LOCS, IOS_RESULT_LOCS)
     return any(driver.find_elements(by, value) for by, value in locators)
 
 
 def open_search_field(driver: WebDriver, timeout: float):
-    """Stable exposes the EditText only after tapping the Search Wikipedia hint."""
+    """Feed → search input on Android (alpha+stable) and iOS."""
+    first_visible(
+        driver, _pick(driver, SEARCH_LOCS, IOS_SEARCH_LOCS), timeout
+    ).click()
+    dismiss_if_present(driver, _pick(driver, PROMO_LOCS, IOS_SKIP_LOCS))
+    if _is_ios(driver):
+        return first_visible(driver, IOS_FIELD_LOCS, timeout)
+    # stable exposes the EditText only after tapping the Search Wikipedia hint
     try:
         return first_visible(driver, FIELD_LOCS, 8)
     except Exception:
@@ -162,16 +209,19 @@ def open_search_field(driver: WebDriver, timeout: float):
 
 
 def _skip_wikipedia_onboarding(driver: WebDriver, timeout: float) -> None:
+    search = _pick(driver, SEARCH_LOCS, IOS_SEARCH_LOCS)
+    skip = _pick(driver, SKIP_LOCS, IOS_SKIP_LOCS)
+    forward = _pick(driver, FORWARD_LOCS, IOS_FORWARD_LOCS)
     for _ in range(6):
-        if _any_visible(driver, SEARCH_LOCS):
+        if _any_visible(driver, search):
             return
-        if _dismiss_system_dialog(driver):
+        if not _is_ios(driver) and _dismiss_system_dialog(driver):
             continue
-        if _click_first(driver, SKIP_LOCS):
+        if _click_first(driver, skip):
             continue
-        if not _click_first(driver, FORWARD_LOCS):
+        if not _click_first(driver, forward):
             break
-    first_visible(driver, SEARCH_LOCS, timeout)
+    first_visible(driver, search, timeout)
 
 
 def _click_first(driver: WebDriver, locators: tuple) -> bool:
