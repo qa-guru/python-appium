@@ -71,6 +71,21 @@ nav (`nav_tab_search`), the first tap opens a "Search widget" promo sheet, and
 the input field is a Compose `EditText` that appears only after tapping the
 "Search Wikipedia" hint. `conftest.py` carries locator sets for both channels.
 
+iOS (macOS only, Appium + xcuitest driver):
+
+```bash
+# simulator — needs a simulator build of the app (xcodebuild -sdk iphonesimulator)
+DEVICE_HOST=ios_simulator IOS_APP=./Wikipedia.app pytest tests
+
+# real iPhone — App Store build by bundleId, WDA must be signed for the device
+DEVICE_HOST=ios_real UDID=<iphone-udid> BUNDLE_ID=org.wikipedia pytest tests
+```
+
+Prerequisites: full Xcode (not just Command Line Tools), license accepted
+(`sudo xcodebuild -license accept`), xcuitest driver
+(`appium driver install xcuitest`). For `ios_real` the WebDriverAgent needs a
+signing profile — free Personal Team works (7-day provisioning).
+
 BrowserStack (own account, like mobile-tests-22):
 
 ```bash

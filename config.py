@@ -65,6 +65,8 @@ class TestConfig:
     platform_version: str
     device_name: str
     udid: str
+    ios_app: str
+    bundle_id: str
     selenoid_user: str
     selenoid_password: str = field(repr=False)
     browserstack_user: str = field(repr=False)
@@ -96,6 +98,8 @@ def load_config() -> TestConfig:
         platform_version=_env("PLATFORM_VERSION", "16.0" if host == "selenoid" else "9.0"),
         device_name=_env("DEVICE_NAME", "Google Pixel 3" if host == "browserstack" else "android"),
         udid=_env("UDID"),
+        ios_app=_env("IOS_APP"),
+        bundle_id=_env("BUNDLE_ID", "org.wikipedia"),
         selenoid_user=selenoid_user,
         selenoid_password=selenoid_password,
         browserstack_user=_env("BROWSERSTACK_USERNAME") or _env("BROWSERSTACK_USER"),

@@ -81,8 +81,8 @@ SYSTEM_DIALOG_IDS = (
 )
 
 
-# Local routes record video on-device (screenrecord); farms publish mp4 files.
-LOCAL_VIDEO_HOSTS = {"emulator", "real"}
+# Local routes record video on-device (screenrecord/XCUITest); farms publish mp4.
+LOCAL_VIDEO_HOSTS = {"emulator", "real", "ios_simulator", "ios_real"}
 
 
 @pytest.fixture(scope="session")

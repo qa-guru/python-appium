@@ -6,6 +6,7 @@ from pathlib import Path
 
 from appium import webdriver
 from appium.options.android import UiAutomator2Options
+from appium.options.ios import XCUITestOptions
 from appium.webdriver.appium_connection import AppiumConnection
 from appium.webdriver.client_config import AppiumClientConfig
 from appium.webdriver.webdriver import WebDriver
@@ -23,9 +24,14 @@ def create_driver(config: TestConfig) -> WebDriver:
         "selenoid": _selenoid,
         "emulator": _local,
         "real": _local,
+        "ios_simulator": _ios_simulator,
+        "ios_real": _ios_real,
     }
     if config.device_host not in builders:
-        raise ValueError("DEVICE_HOST: emulator, real, selenoid, browserstack")
+        raise ValueError(
+            "DEVICE_HOST: emulator, real, selenoid, browserstack, "
+            "ios_simulator, ios_real"
+        )
     return webdriver.Remote(
         _executor(config), options=builders[config.device_host](config)
     )
@@ -115,4 +121,43 @@ def _browserstack(config: TestConfig) -> UiAutomator2Options:
             "debug": True,
         },
     )
+    return options
+
+
+def _ios_base(config: TestConfig) -> XCUITestOptions:
+    options = XCUITestOptions()
+    options.platform_name = "iOS"
+    options.automation_name = "XCUITest"
+    options.new_command_timeout = 120
+    options.device_name = config.device_name
+    if config.platform_version:
+        options.platform_version = config.platform_version
+    return options
+
+
+def _ios_simulator(config: TestConfig) -> XCUITestOptions:
+    """IOS_APP = path to a simulator .app build (xcodebuild -sdk iphonesimulator)."""
+    if not config.ios_app:
+        raise ValueError("Set IOS_APP to a simulator .app build of Wikipedia")
+    path = Path(config.ios_app).expanduser()
+    if not path.is_dir():
+        raise FileNotFoundError(
+            f"Simulator .app not found: {config.ios_app} — build Wikipedia "
+            "with -sdk iphonesimulator first"
+        )
+    options = _ios_base(config)
+    options.app = str(path.resolve())
+    if config.udid:
+        options.udid = config.udid  # simulator UDID from `xcrun simctl list`
+    return options
+
+
+def _ios_real(config: TestConfig) -> XCUITestOptions:
+    """App Store Wikipedia via bundleId; WDA must be signed (xcodeOrgId etc.)."""
+    if not config.udid:
+        raise ValueError("Set UDID to the iPhone's UDID (xcrun xctrace list devices)")
+    options = _ios_base(config)
+    options.udid = config.udid
+    options.set_capability("appium:bundleId", config.bundle_id)
+    options.set_capability("appium:xcodeSigningId", "iPhone Developer")
     return options
