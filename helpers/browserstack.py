@@ -1,18 +1,33 @@
 from __future__ import annotations
 
-import base64
-import json
-from urllib.request import Request, urlopen
+import requests
 
 from config import TestConfig
 
+_SESSION_API = "https://api.browserstack.com/app-automate/sessions/{}.json"
+
+
+def _auth(config: TestConfig) -> tuple[str, str]:
+    return config.browserstack_user, config.browserstack_key
+
+
+def session(config: TestConfig, session_id: str) -> dict:
+    """Same as Java helpers.Browserstack.videoUrl — env creds, not hardcoded."""
+    resp = requests.get(
+        _SESSION_API.format(session_id), auth=_auth(config), timeout=30
+    )
+    resp.raise_for_status()
+    return resp.json()["automation_session"]
+
+
+def download(config: TestConfig, url: str) -> bytes:
+    """Artifact urls are usually pre-signed; fall back to basic auth on 401/403."""
+    resp = requests.get(url, timeout=60)
+    if resp.status_code in (401, 403):
+        resp = requests.get(url, auth=_auth(config), timeout=60)
+    resp.raise_for_status()
+    return resp.content
+
 
 def video_url(config: TestConfig, session_id: str) -> str:
-    """Same as Java helpers.Browserstack.videoUrl — env creds, not hardcoded."""
-    url = f"https://api.browserstack.com/app-automate/sessions/{session_id}.json"
-    token = f"{config.browserstack_user}:{config.browserstack_key}".encode("ascii")
-    req = Request(url)
-    req.add_header("Authorization", "Basic " + base64.b64encode(token).decode("ascii"))
-    with urlopen(req, timeout=30) as resp:
-        body = json.loads(resp.read().decode("utf-8"))
-    return body["automation_session"]["video_url"]
+    return session(config, session_id)["video_url"]
