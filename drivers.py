@@ -6,19 +6,46 @@ from pathlib import Path
 
 from appium import webdriver
 from appium.options.android import UiAutomator2Options
+from appium.webdriver.appium_connection import AppiumConnection
+from appium.webdriver.client_config import AppiumClientConfig
 from appium.webdriver.webdriver import WebDriver
 
 from config import TestConfig
 
+# Selenium's default is socket.getdefaulttimeout() = None — a stalled hub
+# connection would hang forever. Session create on a farm takes ~2 min.
+_HTTP_TIMEOUT_S = 300
+
 
 def create_driver(config: TestConfig) -> WebDriver:
-    if config.device_host == "browserstack":
-        return webdriver.Remote(config.appium_url, options=_browserstack(config))
-    if config.device_host == "selenoid":
-        return webdriver.Remote(config.appium_url, options=_selenoid(config))
-    if config.device_host in {"emulator", "real"}:
-        return webdriver.Remote(config.appium_url, options=_local(config))
-    raise ValueError("DEVICE_HOST: emulator, real, selenoid, browserstack")
+    builders = {
+        "browserstack": _browserstack,
+        "selenoid": _selenoid,
+        "emulator": _local,
+        "real": _local,
+    }
+    if config.device_host not in builders:
+        raise ValueError("DEVICE_HOST: emulator, real, selenoid, browserstack")
+    return webdriver.Remote(
+        _executor(config), options=builders[config.device_host](config)
+    )
+
+
+def _executor(config: TestConfig) -> AppiumConnection:
+    """Basic auth via ClientConfig — never in the URL (it would leak into logs)."""
+    kwargs: dict = {}
+    if config.device_host == "selenoid" and config.selenoid_user:
+        kwargs = {"username": config.selenoid_user, "password": config.selenoid_password}
+    elif config.device_host == "browserstack" and config.browserstack_user:
+        kwargs = {
+            "username": config.browserstack_user,
+            "password": config.browserstack_key,
+        }
+    return AppiumConnection(
+        client_config=AppiumClientConfig(
+            remote_server_addr=config.appium_url, timeout=_HTTP_TIMEOUT_S, **kwargs
+        )
+    )
 
 
 def _android_base(config: TestConfig, *, with_package: bool) -> UiAutomator2Options:
@@ -40,7 +67,7 @@ def _local(config: TestConfig) -> UiAutomator2Options:
     path = Path(app).expanduser()
     if not path.is_file():
         raise FileNotFoundError(
-            f"APK not found: {app}. Download Wikipedia alpha to ANDROID_APP="
+            f"APK not found: {app}. Download the pinned Wikipedia stable to ANDROID_APP="
         )
     options = _android_base(config, with_package=True)
     options.app = str(path.resolve())
@@ -53,8 +80,9 @@ def _selenoid(config: TestConfig) -> UiAutomator2Options:
         raise ValueError("Set ANDROID_APP to an APK URL for Selenoid")
     # Selenoid routes on browserName=android. Appium inside rejects appPackage+browserName.
     options = _android_base(config, with_package=False)
+    options.new_command_timeout = 300  # app download+install on the farm is slow
     options.set_capability("browserName", "android")
-    options.set_capability("browserVersion", config.platform_version or "13.0")
+    options.set_capability("browserVersion", config.platform_version or "16.0")
     options.device_name = "android"
     options.app = config.android_app
     options.set_capability(
