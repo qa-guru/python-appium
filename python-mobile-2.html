@@ -6,7 +6,7 @@
   <meta name="color-scheme" content="light">
   <title>QA.GURU · Python Mobile 2</title>
   <style>
-    :root { --ink: #172b3a; --muted: #607080; --accent: #155bd7; --paper: #ffffff; --line: #dce3eb; --soft: #eff4fb; --code: #172b3a; }
+    :root { --ink: #172b3a; --muted: #526270; --accent: #155bd7; --paper: #ffffff; --line: #dce3eb; --soft: #eff4fb; --code: #172b3a; }
     * { box-sizing: border-box; }
     body { margin: 0; background: #e9edf2; color: var(--ink); font-family: Arial, Helvetica, sans-serif; overflow: hidden; }
     button, a { -webkit-tap-highlight-color: transparent; }
@@ -19,60 +19,54 @@
     .slide.dark .kicker, .slide.dark .footer, .slide.dark .muted { color: #b8c8dc; }
     .slide.dark .footer { border-color: #42576c; }
     .slide.dark a { color: #a5c8ff; }
-    .kicker { margin: 0 0 14px; color: var(--accent); font-size: 17px; line-height: 1.2; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+    .kicker { margin: 0 0 14px; color: var(--accent); font-size: 18px; line-height: 1.2; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
     h1 { margin: 0; font-size: 78px; line-height: 1.06; letter-spacing: -3px; font-weight: 700; }
     h2 { margin: 0; font-size: 43px; line-height: 1.13; letter-spacing: -1.2px; font-weight: 700; }
     h3 { margin: 0 0 18px; font-size: 28px; line-height: 1.2; }
-    p { margin: 0 0 18px; font-size: 25px; line-height: 1.42; }
-    .subtitle { margin: 18px 0 0; color: var(--muted); font-size: 23px; line-height: 1.35; }
-    .dark .subtitle { color: #b8c8dc; }
-    .content { flex: 1; min-height: 0; margin-top: 28px; }
-    .footer { margin-top: 22px; padding-top: 14px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 20px; color: var(--muted); font-size: 15px; line-height: 1.2; }
+    p { margin: 0 0 18px; font-size: 26px; line-height: 1.38; }
+    .content { flex: 1; min-height: 0; margin-top: 26px; }
+    .footer { margin-top: 22px; padding-top: 14px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 20px; color: var(--muted); font-size: 16px; line-height: 1.2; }
     .footer .page { font-variant-numeric: tabular-nums; }
     .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 38px; align-items: start; }
-    .cols.code-left { grid-template-columns: 1.32fr 0.88fr; gap: 30px; }
-    .cols.code-right { grid-template-columns: 0.88fr 1.32fr; gap: 30px; }
+    .cols.code-left { grid-template-columns: 1.6fr 0.9fr; gap: 30px; }
     .cols.three { grid-template-columns: 1fr 1fr 1fr; gap: 30px; }
     .list { margin: 0; padding-left: 26px; }
-    .list li { font-size: 25px; line-height: 1.4; margin: 0 0 17px; padding-left: 3px; }
-    .list.compact li { font-size: 22px; margin-bottom: 13px; }
+    .list li { font-size: 26px; line-height: 1.38; margin: 0 0 16px; padding-left: 3px; }
+    .list.compact li { font-size: 24px; margin-bottom: 14px; }
     .muted { color: var(--muted); }
-    .small { font-size: 19px; line-height: 1.42; }
-    .tiny { font-size: 16px; line-height: 1.4; }
-    .note { padding: 20px 24px; background: var(--soft); font-size: 21px; line-height: 1.4; margin-top: 22px; }
+    .small { font-size: 22px; line-height: 1.38; }
+    .note { padding: 20px 22px; background: var(--soft); font-size: 24px; line-height: 1.35; margin-top: 22px; }
     .note strong { color: var(--accent); }
-    .tag { display: inline-block; padding: 7px 11px; font-size: 16px; font-weight: 700; line-height: 1.2; color: var(--accent); background: var(--soft); margin: 0 8px 12px 0; }
+    .tag { display: inline-block; padding: 7px 11px; font-size: 18px; font-weight: 700; line-height: 1.2; color: var(--accent); background: var(--soft); margin: 0 8px 12px 0; }
     .rule { height: 4px; width: 90px; background: var(--accent); margin: 26px 0; }
     .hero { justify-content: center; }
     .hero .hero-body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
     .hero .kicker { color: #a5c8ff; }
-    .hero p { font-size: 29px; margin-top: 26px; max-width: 1000px; }
+    .hero p { font-size: 30px; margin-top: 26px; max-width: 1060px; }
     .hero .rule { background: #a5c8ff; }
     .statement { font-size: 47px; line-height: 1.2; letter-spacing: -1px; max-width: 1080px; margin: 30px 0; }
     .big-number { font-size: 68px; font-weight: 700; color: var(--accent); line-height: 1; margin-bottom: 18px; }
-    pre { margin: 0; padding: 21px 24px; background: var(--code); color: #f0f5ff; font-family: Menlo, Consolas, monospace; font-size: 18px; line-height: 1.48; white-space: pre; tab-size: 4; overflow: hidden; }
-    pre.compact { font-size: 16px; line-height: 1.45; padding: 19px 21px; }
+    pre { margin: 0; padding: 20px; background: var(--code); color: #f0f5ff; font-family: Menlo, Consolas, monospace; font-size: 20px; line-height: 1.42; white-space: pre; tab-size: 4; overflow: hidden; }
+    pre.compact { font-size: 20px; line-height: 1.42; padding: 20px; }
     code { font-family: Menlo, Consolas, monospace; }
-    p code, li code, td code, .note code, .small code { font-size: 0.84em; background: var(--soft); padding: 2px 5px; color: var(--ink); }
+    p code, li code, td code, .note code, .small code { font-size: 0.95em; background: var(--soft); padding: 2px 4px; color: var(--ink); }
     .flow { display: flex; align-items: stretch; gap: 17px; margin: 24px 0 32px; }
-    .flow .step { flex: 1; border: 1px solid var(--line); padding: 23px 17px; font-size: 25px; line-height: 1.3; }
-    .flow .step span { display: block; margin-top: 13px; font-size: 18px; color: var(--muted); line-height: 1.35; }
+    .flow .step { flex: 1; border: 1px solid var(--line); padding: 23px 17px; font-size: 26px; line-height: 1.3; }
+    .flow .step span { display: block; margin-top: 13px; font-size: 22px; color: var(--muted); line-height: 1.35; }
     .flow .arrow { display: flex; align-items: center; color: var(--accent); font-size: 29px; }
-    table { width: 100%; border-collapse: collapse; font-size: 22px; line-height: 1.3; }
-    th, td { text-align: left; padding: 13px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
-    th { font-size: 17px; color: var(--muted); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+    table { width: 100%; border-collapse: collapse; font-size: 24px; line-height: 1.3; }
+    th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 18px; color: var(--muted); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
     th:first-child, td:first-child { padding-left: 0; }
-    .key { color: var(--accent); font-weight: 700; }
-    .stack { display: flex; flex-direction: column; gap: 20px; }
-    .sources li { font-size: 20px; line-height: 1.3; margin-bottom: 17px; }
+    .sources li { font-size: 22px; line-height: 1.3; margin-bottom: 18px; }
     .speaker-notes { display: none; }
-    #controls { position: fixed; left: 0; right: 0; bottom: 13px; display: flex; justify-content: center; gap: 10px; align-items: center; font-size: 13px; color: var(--muted); }
+    #controls { position: fixed; left: 0; right: 0; bottom: 13px; display: flex; justify-content: center; gap: 10px; align-items: center; font-size: 15px; color: var(--muted); }
     #controls button { border: 1px solid #bdc8d5; background: white; color: var(--ink); border-radius: 4px; padding: 8px 12px; font: inherit; cursor: pointer; }
     #controls button:disabled { opacity: 0.45; cursor: default; }
     #position { min-width: 60px; text-align: center; font-variant-numeric: tabular-nums; }
     #hint { margin-left: 10px; }
     #progress { position: fixed; left: 0; bottom: 0; height: 3px; background: var(--accent); }
-    #notes-panel { display: none; position: fixed; left: 24px; right: 24px; bottom: 62px; padding: 20px 24px; background: white; border: 1px solid var(--line); color: var(--ink); font-size: 17px; line-height: 1.45; max-height: 230px; overflow: auto; }
+    #notes-panel { display: none; position: fixed; left: 24px; right: 24px; bottom: 62px; padding: 20px 24px; background: white; border: 1px solid var(--line); color: var(--ink); font-size: 18px; line-height: 1.45; max-height: 230px; overflow: auto; }
     #notes-panel.open { display: block; }
     #notes-panel strong { display: block; margin-bottom: 8px; color: var(--accent); }
     @page { size: 1280px 720px; margin: 0; }
@@ -94,559 +88,501 @@
       <div class="kicker">QA.GURU · Python · Mobile 2</div>
       <h1>Мобильная<br>автоматизация</h1>
       <div class="rule"></div>
-      <p>От одного облачного теста — к управляемому запуску<br>на эмуляторе, симуляторе и настоящем устройстве.</p>
-      <p class="small muted">pytest · Appium · Allure · Android · iOS</p>
+      <p>Запускаем тесты Wikipedia на эмуляторе,<br>телефоне и в облаке. Добавляем Allure.</p>
+      <p class="small muted">pytest · Appium · Android · iOS</p>
     </div>
-    <aside class="speaker-notes">Это продолжение первой части, не вводный курс по Python. Материал основан на коде qa-guru/python-appium и официальных документах. Программы GetCourse не удалось прочитать из-за авторизации; их сверка остаётся обязательным шагом преподавателя. Не называйте подготовку слайдов доказательством работоспособности всех устройств.</aside>
+    <aside class="speaker-notes">Продолжаем первый урок. Начните с уже знакомого теста BrowserStack и покажите, что в нём меняется для локального запуска. Содержание GetCourse ещё нужно сверить: страницы уроков потребовали входа.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">Результат занятия</div>
-    <h2>Один сценарий. Разные места запуска.</h2>
+    <div class="kicker">Сегодня на занятии</div>
+    <h2>Запуск теста, устройства и отчёт</h2>
     <div class="content cols three">
-      <div><div class="big-number">01</div><h3>Управлять сессией</h3><p>Создать драйвер из конфигурации и завершить его даже при падении.</p></div>
-      <div><div class="big-number">02</div><h3>Видеть причину</h3><p>Screenshot, XML, доступные логи и видео в Allure.</p></div>
-      <div><div class="big-number">03</div><h3>Выбирать среду</h3><p>Android локально и на ферме. iOS на Mac и iPhone.</p></div>
+      <div><div class="big-number">01</div><h3>Запускаем тест</h3><p>Выбираем сервер и устройство. Создаём и закрываем сессию.</p></div>
+      <div><div class="big-number">02</div><h3>Разбираем падение</h3><p>Сохраняем экран, XML и видео. Открываем их в Allure.</p></div>
+      <div><div class="big-number">03</div><h3>Готовим iOS</h3><p>Разбираемся с Simulator, сборкой приложения и WDA.</p></div>
     </div>
-    <aside class="speaker-notes">Основную практику удобно строить на Android, поскольку он доступен на macOS, Windows и Linux. iOS и физические устройства показываются явно, но наличие Mac/iPhone не должно быть условием участия каждого студента. Длительность и приоритеты блоков согласуйте перед уроком.</aside>
+    <aside class="speaker-notes">Основная практика — Android. iOS можно показать на компьютере преподавателя, чтобы отсутствие Mac или iPhone не мешало студентам пройти урок.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">Точка старта</div>
-    <h2>Продолжаем python-appium, не пишем новый фреймворк</h2>
+    <div class="kicker">Учебный проект</div>
+    <h2>Что уже есть в python-appium</h2>
     <div class="content cols">
-      <div><h3>Уже есть в локальной ветке</h3><ul class="list compact"><li>pytest + Appium-Python-Client.</li><li>Фабрика <code>create_driver(config)</code>.</li><li>BrowserStack / Selenoid / local Android.</li><li>Allure screenshot, XML и хук падения.</li></ul><p class="small muted">Ветка <code>selenoid</code> · состояние кода на 14.10.2026.</p></div>
-      <div><h3>Развиваем на занятии</h3><ul class="list compact"><li>Явный выбор устройства по UDID.</li><li>Понятные профили запуска и состояния.</li><li>Видео фермы и диагностика аттачей.</li><li>Отдельные возможности XCUITest / iOS.</li></ul><div class="note">Без Selene, Sonar, API-клиента и лишних абстракций.</div></div>
+      <div><h3>Код проекта</h3><ul class="list compact"><li>Тест поиска в Wikipedia.</li><li>Настройки сервера и драйверов.</li><li>Выбор Android-устройства по UDID.</li><li>Screenshot, XML и видео в Allure.</li></ul></div>
+      <div><h3>Разберём на уроке</h3><ul class="list compact"><li>Как запускать тест на разных устройствах.</li><li>Когда снимать вложения.</li><li>Чем iOS отличается от Android.</li></ul><div class="note">iOS-драйверы уже есть. Локаторы самого теста пока только Android.</div></div>
     </div>
-    <aside class="speaker-notes">В локальном дереве есть существующий WIP. Презентация его не меняет и не коммитит. Screenshot-on-failure и finally уже добавлены, поэтому не представляйте их как отсутствующий код. iOS и явный UDID в drivers.py пока не подключены; примеры соответствующих опций дальше — учебное расширение.</aside>
+    <aside class="speaker-notes">Откройте drivers.py, conftest.py и tests/test_search.py. Не начинайте новый фреймворк: используйте текущую ветку selenoid. В ней уже реализованы UDID и создание iOS-сессии, но поиск и onboarding ещё используют Android-локаторы.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">Архитектура</div>
-    <h2>Кто кому отправляет команды</h2>
+    <div class="kicker">Как работает Appium</div>
+    <h2>Путь команды от теста до приложения</h2>
     <div class="content">
-      <div class="flow"><div class="step"><strong>pytest</strong><span>Тест и фикстуры</span></div><span class="arrow">→</span><div class="step"><strong>Python client</strong><span>WebDriver-команды</span></div><span class="arrow">→</span><div class="step"><strong>Appium Server</strong><span>Выбранный driver</span></div><span class="arrow">→</span><div class="step"><strong>Устройство</strong><span>UiAutomator2 / WDA</span></div></div>
-      <div class="cols"><p><strong>Android:</strong> Appium → UiAutomator2 → приложение.</p><p><strong>iOS:</strong> Appium → XCUITest → WebDriverAgent → приложение.</p></div>
-      <div class="note"><strong>Inspector — ещё один клиент.</strong> Он подключается к серверу, а не заменяет его.</div>
+      <div class="flow"><div class="step"><strong>pytest</strong><span>Тест и фикстуры</span></div><span class="arrow">→</span><div class="step"><strong>Python client</strong><span>Команды драйвера</span></div><span class="arrow">→</span><div class="step"><strong>Appium</strong><span>Сервер и драйвер</span></div><span class="arrow">→</span><div class="step"><strong>Устройство</strong><span>Приложение</span></div></div>
+      <div class="cols"><p><strong>Android:</strong> UiAutomator2 управляет приложением.</p><p><strong>iOS:</strong> XCUITest работает через WebDriverAgent.</p></div>
+      <div class="note">Inspector — тоже клиент Appium. Сервер он не заменяет.</div>
     </div>
-    <aside class="speaker-notes">Попросите студентов назвать, где работает каждый процесс. Python-библиотека не запускает Appium Server автоматически. Сервер может быть на другой машине. Путь к APK/.app должен быть доступен именно серверу, а не только клиенту.</aside>
+    <aside class="speaker-notes">Спросите, на какой машине находится каждый процесс. Python-клиент может работать отдельно от сервера. APK и .app должны быть доступны машине Appium Server.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">Среды выполнения</div>
-    <h2>Эмулятор Android ≠ симулятор iOS</h2>
-    <div class="content">
-      <table aria-label="Поддержка сред выполнения"><thead><tr><th>Профиль</th><th>Android</th><th>iOS</th></tr></thead><tbody><tr><td>emulator</td><td>Android Emulator / AVD</td><td>—</td></tr><tr><td>simulator</td><td>—</td><td>Xcode Simulator</td></tr><tr><td>real</td><td>Android + adb + UDID</td><td>iPhone + Xcode + WDA</td></tr><tr><td>selenoid</td><td>Учебная Android-ферма</td><td>Не поддерживается</td></tr><tr><td>browserstack</td><td>Существующий облачный маршрут</td><td>Отдельный контракт и IPA</td></tr></tbody></table>
-      <p class="small muted" style="margin-top:18px">Матрица — цель урока. Наличие профиля в конфигурации не доказывает успешный запуск.</p>
-    </div>
-    <aside class="speaker-notes">В учебном проекте Selenoid — строго Android. Для iOS BrowserStack нельзя просто перенести локальный bundleId и считать, что приложение появится в облаке: App Automate требует свою схему загрузки. Локальный сервер iOS в рамках урока — на macOS; удалённый Python-клиент может находиться на другой ОС.</aside>
+    <div class="kicker">Место запуска</div>
+    <h2>Выбираем DEVICE_HOST</h2>
+    <div class="content"><table aria-label="Профили запуска"><thead><tr><th>Значение</th><th>Где создаётся сессия</th></tr></thead><tbody><tr><td><code>emulator</code></td><td>Локальный Android Emulator</td></tr><tr><td><code>real</code></td><td>Подключённый Android-телефон</td></tr><tr><td><code>selenoid</code></td><td>Учебная Android-ферма</td></tr><tr><td><code>browserstack</code></td><td>BrowserStack App Automate</td></tr><tr><td><code>ios_simulator</code> / <code>ios_real</code></td><td>Simulator / iPhone на Mac</td></tr></tbody></table><p class="small muted" style="margin-top:20px">Для iOS после настройки драйвера ещё нужно перенести сценарий поиска.</p></div>
+    <aside class="speaker-notes">В этой ветке нет переменной PLATFORM: всё выбирается через DEVICE_HOST. Покажите словарь builders в drivers.py. На учебном Selenoid работает только Android.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">Приложение под тестом</div>
-    <h2>Wikipedia: сохраняем преемственность</h2>
+    <div class="kicker">Wikipedia</div>
+    <h2>На телефоне и ферме — разные сборки</h2>
     <div class="content cols">
-      <div><h3>Android</h3><ul class="list compact"><li>Официальный stable APK: <strong>50611-r-2026-10-07</strong>.</li><li>Для stable проверяем <code>org.wikipedia</code>.</li><li>GitHub <code>latest</code> — alpha, другой канал и package.</li><li>Версию и SHA-256 фиксируем до урока.</li></ul><p class="small"><a href="https://releases.wikimedia.org/mobile/android/wikipedia/stable/wikipedia-50611-r-2026-10-07.apk">Официальный APK</a> · <a href="https://releases.wikimedia.org/mobile/android/wikipedia/stable/">stable-каталог</a></p></div>
-      <div><h3>iOS</h3><ul class="list compact"><li>Simulator: сборка <code>.app</code> из исходников.</li><li>iPhone: установленная версия из App Store.</li><li>Для iPhone можно запускать по <code>bundleId</code>.</li><li>Пересборка Wikipedia не обязательна для этого пути.</li></ul><p class="small"><a href="https://github.com/wikimedia/wikipedia-ios">Исходники iOS</a> · <a href="https://apps.apple.com/us/app/wikipedia/id324715238">App Store</a></p></div>
+      <div><h3>Локальный Android</h3><ul class="list compact"><li>Stable <strong>50611-r-2026-10-07</strong>.</li><li>Package: <code>org.wikipedia</code>.</li><li>Путь к APK на машине сервера.</li><li>Версия и SHA-256 записаны в README.</li></ul><p class="small"><a href="https://releases.wikimedia.org/mobile/android/wikipedia/stable/wikipedia-50611-r-2026-10-07.apk">Официальный APK</a></p></div>
+      <div><h3>Selenoid</h3><ul class="list compact"><li>Sample Wikipedia 2017 года.</li><li>Package: <code>org.wikipedia.alpha</code>.</li><li>Ферма скачивает APK по URL.</li><li>Экран поиска отличается от stable.</li></ul><div class="note">Не копируем локаторы между сборками без проверки в Inspector.</div></div>
     </div>
-    <aside class="speaker-notes">Ссылка на выбранный APK проверена HTTP HEAD 200. Сам APK в ходе подготовки слайдов не устанавливался; ABI, minSdk, подпись и локаторы должны быть проверены перед демонстрацией. Плавающий latest нельзя использовать для повторяемых запусков. Последний видимый iOS GitHub release releases/2026.09.29 не содержит бинарных assets.</aside>
+    <aside class="speaker-notes">В предыдущих прогонах stable зависала на этой ферме, поэтому в проекте оставлен старый sample. Не обещайте последнюю Wikipedia на Selenoid. Для локальной практики используем stable; её поиск в Compose устроен иначе.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">Подготовка · версии</div>
-    <h2>Фиксируем toolchain, а не устанавливаем «всё latest»</h2>
+    <div class="kicker">Перед установкой</div>
+    <h2>Версии для учебного окружения</h2>
     <div class="content cols">
-      <div><h3>Рантаймы учебного окружения</h3><ul class="list"><li><strong>Python 3.14</strong> + venv.</li><li><strong>JDK 21</strong> для Android tooling.</li><li><strong>Node.js 26</strong>, npm 10+ для Appium.</li></ul><p class="small muted">Pins из SSOT рабочего пространства. Зависимости Python берём из учебного проекта.</p></div>
-      <div><h3>Проверенные npm-версии</h3><table aria-label="Закреплённые версии инструментов"><tbody><tr><td>Appium Server</td><td>3.5.0</td></tr><tr><td>UiAutomator2</td><td>6.0.0</td></tr><tr><td>XCUITest</td><td>12.8.0</td></tr><tr><td>Allure CLI 2</td><td>2.34.1</td></tr></tbody></table><p class="small muted" style="margin-top:18px">Существование, возраст релизов и Appium peerDependencies проверены. Device smoke — отдельный шаг.</p></div>
+      <div><h3>Основные инструменты</h3><ul class="list"><li>Python <strong>3.14</strong>.</li><li>JDK <strong>21</strong>.</li><li>Node.js <strong>26</strong>, npm 10+.</li></ul><p class="small muted">Python-пакеты устанавливаем из requirements.txt.</p></div>
+      <div><h3>Сервер и драйверы</h3><table aria-label="Версии инструментов"><tbody><tr><td>Appium</td><td>3.5.0</td></tr><tr><td>UiAutomator2</td><td>6.0.0</td></tr><tr><td>XCUITest</td><td>12.8.0</td></tr><tr><td>Allure CLI 2</td><td>2.34.1</td></tr></tbody></table></div>
     </div>
-    <aside class="speaker-notes">Appium 3.5.0 опубликован 31.05.2026; UiAutomator2 6.0.0 — 24.10.2025; XCUITest 12.8.0 — 24.08.2026; allure-commandline 2.34.1 — 24.06.2025. Оба драйвера заявляют Appium ^3.0.0-rc.2. Это проверка метаданных, а не принятие мобильных запусков. Xcode/macOS/iOS должны пройти свою матрицу совместимости.</aside>
+    <aside class="speaker-notes">Версии Appium и drivers проверены по npm metadata; на конкретном устройстве нужен отдельный пробный запуск. Для iOS дополнительно сверяем Xcode, macOS и версию iOS по таблице XCUITest.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">Подготовка · Python</div>
-    <h2>Изолированное окружение проекта</h2>
+    <div class="kicker">Python</div>
+    <h2>Устанавливаем зависимости проекта</h2>
     <div class="content cols">
-      <div><h3>macOS / Linux</h3><pre class="compact"><code>python3.14 -m venv .venv
-.venv/bin/python -m pip install \
-    -r requirements.txt
-.venv/bin/python --version
-.venv/bin/pytest --collect-only tests</code></pre><p class="small muted" style="margin-top:20px">Collection проверяет импорт и обнаружение тестов, не соединение с устройством.</p></div>
-      <div><h3>Windows · PowerShell</h3><pre class="compact"><code>py -3.14 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install `
-    -r requirements.txt
-.\.venv\Scripts\python.exe --version
+      <div><h3>macOS / Linux</h3><pre data-lang="bash"><code>python3.14 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+pytest --collect-only tests</code></pre></div>
+      <div><h3>Windows · PowerShell</h3><pre data-lang="powershell"><code>py -3.14 -m venv .venv
+.\.venv\Scripts\python.exe -m pip `
+    install -r requirements.txt
 .\.venv\Scripts\pytest.exe `
-    --collect-only tests</code></pre><p class="small muted" style="margin-top:20px">Можно использовать venv без Activate.ps1 и без ослабления Execution Policy.</p></div>
+    --collect-only tests</code></pre></div>
     </div>
-    <aside class="speaker-notes">Команды выполняются в корне python-appium. В локальном requirements уже закреплены Appium-Python-Client 6.0.7, pytest 9.1.1, allure-pytest 2.16.2 и python-dotenv 1.2.4. Перед уроком проверьте совместимость и импорты на выбранном Python; не обновляйте зависимости в эфире. Не устанавливайте пакеты в системный Python. Collection не создаёт Appium-сессию при корректно устроенных фикстурах.</aside>
+    <p class="small muted">С --collect-only pytest находит тесты, но не запускает их.</p>
+    <aside class="speaker-notes">Если venv уже создан, не создавайте его заново. На Windows можно вызвать Python и pytest напрямую, без изменения Execution Policy. Полные команды и настройка .env есть в README.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">Подготовка · Android SDK</div>
-    <h2>Android Studio — удобный вход в SDK</h2>
+    <div class="kicker">Android SDK</div>
+    <h2>Что установить в Android Studio</h2>
     <div class="content cols">
-      <div><h3>SDK Manager</h3><ul class="list compact"><li>Android SDK Platform.</li><li>Android SDK Platform-Tools.</li><li>Android SDK Build-Tools.</li><li>Android SDK Command-line Tools.</li><li>Android Emulator + system image.</li></ul></div>
-      <div><h3>Device Manager</h3><ul class="list compact"><li>Создать AVD с выбранной версией Android.</li><li>Apple Silicon: образ подходящей arm64-архитектуры.</li><li>Intel/AMD: подходящий x86_64-образ.</li><li>Проверить аппаратную виртуализацию.</li><li>Дождаться полного старта Android.</li></ul></div>
+      <div><h3>SDK Manager</h3><ul class="list compact"><li>SDK Platform.</li><li>Platform-Tools: команда adb.</li><li>Build-Tools и Command-line Tools.</li><li>Emulator и system image.</li></ul></div>
+      <div><h3>Device Manager</h3><ul class="list compact"><li>Создать AVD.</li><li>Выбрать версию Android.</li><li>Подобрать архитектуру образа.</li><li>Дождаться полного старта системы.</li></ul><div class="note">Для Apple Silicon выбираем arm64. APK должен поддерживать тот же ABI.</div></div>
     </div>
-    <aside class="speaker-notes">Сравните ABI устройства и APK; один ARM-only APK не обязан работать на x86_64 ферме. Android API level и отображаемая версия Android — разные значения. Лицензии SDK и системные разрешения подтверждает владелец рабочего места. Не устанавливайте автоматически всё подряд ради прохождения Doctor.</aside>
+    <aside class="speaker-notes">Покажите оба окна Android Studio. API level не равен номеру Android. Если APK не устанавливается, сравните minSdk и ABI приложения с выбранным образом.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">Подготовка · macOS / Linux</div>
-    <h2>JAVA_HOME, ANDROID_HOME и PATH</h2>
+    <div class="kicker">SDK · macOS и Linux</div>
+    <h2>Указываем пути к Java и Android SDK</h2>
     <div class="content cols code-left">
-      <pre class="compact"><code>export JAVA_HOME=$(/usr/libexec/java_home -v 21)
+      <pre data-lang="bash"><code>export JAVA_HOME=$(/usr/libexec/java_home -v 21)
 export ANDROID_HOME="$HOME/Library/Android/sdk"
 export PATH="$JAVA_HOME/bin:$PATH"
 export PATH="$ANDROID_HOME/platform-tools:$PATH"
 export PATH="$ANDROID_HOME/emulator:$PATH"
-export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$PATH"
 
 java -version
-adb version
-emulator -list-avds</code></pre>
-      <div><span class="tag">ПРИМЕР ДЛЯ macOS</span><p class="small">Путь к SDK сверяем в Android Studio, а не угадываем.</p><p class="small"><strong>Linux:</strong> укажи свой JDK и SDK; часто SDK находится в <code>$HOME/Android/Sdk</code>.</p><div class="note">Проверка важнее наличия переменной: команды должны реально находить нужные инструменты.</div></div>
+adb version</code></pre>
+      <div><p class="small">Слева — пример для macOS.</p><p class="small">На Linux укажите свой JDK и путь к SDK из Android Studio.</p><div class="note">Не хватит просто задать PATH: проверьте, какую Java и adb он находит.</div></div>
     </div>
-    <aside class="speaker-notes">Путь cmdline-tools/latest — имя каталога SDK, а не установка latest-зависимости через npm. Если структура SDK другая, используйте фактический путь из SDK Manager. Не прописывайте переменные в чужие системные конфиги: сначала проверка в своей shell, затем согласованное сохранение.</aside>
+    <aside class="speaker-notes">Подробные варианты для Linux и command-line tools перенесены в README. На уроке достаточно показать путь в SDK Manager и две проверочные команды.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">Подготовка · Windows</div>
-    <h2>Те же инструменты, другие пути</h2>
+    <div class="kicker">SDK · Windows</div>
+    <h2>Настройка переменных в PowerShell</h2>
     <div class="content cols code-left">
-      <pre class="compact"><code>$env:JAVA_HOME = "C:\Tools\jdk-21"
-$env:ANDROID_HOME = "$env:LOCALAPPDATA\Android\Sdk"
-$env:Path = "$env:JAVA_HOME\bin;" +
-    "$env:ANDROID_HOME\platform-tools;" +
-    "$env:ANDROID_HOME\emulator;" + $env:Path
+      <pre data-lang="powershell"><code>$sdk = "$env:LOCALAPPDATA\Android\Sdk"
+$env:ANDROID_HOME = $sdk
+$env:JAVA_HOME = "C:\Tools\jdk-21"
+$env:Path += ";$env:JAVA_HOME\bin"
+$env:Path += ";$sdk\platform-tools;$sdk\emulator"
 
 java -version
-adb version
-adb devices -l
-emulator -list-avds</code></pre>
-      <div><p>JDK устанавливаем отдельно или используем проверенный доступный JDK 21.</p><p class="small">Путь <code>C:\Tools\jdk-21</code> — пример. Укажи фактический каталог.</p><div class="note">После изменения постоянных переменных открой новый терминал. Не отключай защиту системы ради настройки.</div></div>
+adb version</code></pre>
+      <div><p>Путь к JDK замените своим.</p><p class="small">Путь к SDK проверьте в Android Studio.</p><div class="note">После изменения постоянных переменных откройте новый терминал.</div></div>
     </div>
-    <aside class="speaker-notes">На конкретной Windows-машине ANDROID_HOME может отличаться от стандартного. При использовании sdkmanager добавьте путь к установленным command-line tools. Не предлагайте Set-ExecutionPolicy Unrestricted: venv можно вызывать напрямую. Для Android Device Manager может потребоваться настройка виртуализации владельцем машины.</aside>
+    <aside class="speaker-notes">Эти команды меняют переменные текущего PowerShell. Если нужна постоянная настройка, используйте переменные своей учётной записи Windows. Полный PATH, включая sdkmanager, приведён в README.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">Подготовка · Appium</div>
-    <h2>Server и drivers устанавливаются отдельно</h2>
+    <div class="kicker">Appium</div>
+    <h2>Appium и драйвер устанавливаем отдельно</h2>
     <div class="content cols code-left">
-      <pre class="compact"><code>npm install -g appium@3.5.0
+      <pre data-lang="bash"><code>npm install -g appium@3.5.0
 appium driver install uiautomator2@6.0.0
 
 appium --version
 appium driver list --installed
-appium driver doctor uiautomator2
-
-appium driver install xcuitest@12.8.0
-appium driver doctor xcuitest</code></pre>
-      <div><p><strong>UiAutomator2</strong> — Android.</p><p><strong>XCUITest</strong> — локальный iOS на Mac.</p><p class="small">UiAutomator2 5+ и XCUITest 10+ требуют Appium 3.</p><div class="note">Установки — только в выделенном учебном окружении. Версию фермы этим не меняем.</div></div>
+appium driver doctor uiautomator2</code></pre>
+      <div><p><strong>UiAutomator2</strong> управляет Android.</p><p><strong>XCUITest</strong> нужен для iOS на Mac.</p><div class="note">Установка Python-клиента не запускает Appium Server.</div></div>
     </div>
-    <aside class="speaker-notes">Две последние команды — только для macOS/iOS. Не устанавливайте XCUITest на Windows ради галочки. Если Appium уже установлен, сначала определите его версию и drivers, а не обновляйте вслепую. Doctor обязательные и optional-проверки различает: зависимости записи видео не всегда нужны для первого теста.</aside>
+    <aside class="speaker-notes">Сначала проверьте существующую установку. Doctor показывает обязательные и необязательные зависимости; например, инструменты записи видео не нужны для первого поиска. UiAutomator2 5+ и XCUITest 10+ требуют Appium 3.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">Подготовка · Inspector</div>
-    <h2>Inspector соединяется с уже работающим сервером</h2>
+    <div class="kicker">Appium Inspector</div>
+    <h2>К какому серверу подключаемся</h2>
     <div class="content cols">
-      <div><h3>Appium Server</h3><pre class="compact"><code>appium --address 127.0.0.1 \
-    --base-path /wd/hub</code></pre><p class="small muted" style="margin-top:20px">Пример для существующего профиля <code>/wd/hub</code>. У Appium путь по умолчанию — <code>/</code>.</p><p class="small">Host/port берём из выбранного учебного профиля и вывода сервера.</p></div>
-      <div><h3>Appium Inspector</h3><ul class="list compact"><li>Отдельное desktop-приложение.</li><li>Скачать официальный release под свою ОС/архитектуру.</li><li>Указать тот же host, port, SSL и base path.</li><li>Передать capabilities выбранного устройства.</li><li>После исследования завершить сессию.</li></ul></div>
+      <div><h3>Параметры подключения</h3><ul class="list"><li>Host и port сервера.</li><li>SSL и base path.</li><li>Options выбранного устройства.</li></ul><p class="small muted">Те же настройки должны быть в APPIUM_URL теста.</p></div>
+      <div><h3>Частая ошибка: base path</h3><p>В Appium 2 и 3 по умолчанию используется <code>/</code>.</p><p>Если сервер настроен на <code>/wd/hub</code>, этот путь нужен и клиенту.</p><div class="note">Версия Appium сама по себе не определяет base path.</div></div>
     </div>
-    <aside class="speaker-notes">Команда на слайде — учебный пример, не проверенный живой стенд. В рабочем пространстве запускать сервер следует только через разрешённый процесс проекта/реестр, если он применяется. В ходе подготовки презентации HTTP/Appium-сервер не запускался. Inspector не равен старому Appium Desktop. Системные запросы доверия подтверждает владелец после проверки источника; не отключайте Gatekeeper глобально.</aside>
+    <aside class="speaker-notes">Inspector устанавливается отдельно. Покажите адрес уже запущенного сервера и ту же настройку в .env. В Zero Design System используйте зарегистрированный appium-wd-hub через ensure.py, не запускайте второй сервер на том же порту.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">Практика · Android Emulator</div>
-    <h2>Сначала устройство online, потом pytest</h2>
-    <div class="content cols">
-      <div><div class="flow" style="margin-top:0"><div class="step"><strong>AVD</strong><span>Запустить в Device Manager</span></div><span class="arrow">→</span><div class="step"><strong>adb</strong><span>Проверить устройство</span></div></div><pre class="compact"><code>adb devices -l
-adb -s "$ANDROID_UDID" shell getprop \
-    ro.product.cpu.abi
-adb -s "$ANDROID_UDID" shell getprop \
-    sys.boot_completed</code></pre></div>
-      <div><ul class="list compact"><li>В списке должен быть статус <code>device</code>, не offline.</li><li>Зафиксировать serial в конфигурации.</li><li>Проверить совместимость APK и образа.</li><li>Запустить Appium и первый smoke.</li></ul><div class="note">Один эмулятор, один последовательный запуск — хороший старт для урока.</div></div>
-    </div>
-    <aside class="speaker-notes">ANDROID_UDID предварительно задаётся значением из adb devices -l. Для полного старта sys.boot_completed обычно возвращает 1. Не начинайте урок с cold boot сразу нескольких AVD. Appium deviceName для Android не заменяет явный выбор устройства по udid.</aside>
-  </section>
-
-  <section class="slide">
-    <div class="kicker">Практика · настоящий Android</div>
-    <h2>USB debugging + доверие + конкретный serial</h2>
-    <div class="content cols">
-      <div><ul class="list"><li>Включить Developer Options и USB debugging.</li><li>Подключить телефон по USB.</li><li>Подтвердить доверие компьютеру на телефоне.</li><li>Убедиться: <code>adb devices -l</code> → <code>device</code>.</li></ul></div>
-      <div><pre><code>options.udid = device_udid
-options.automation_name = "UiAutomator2"
-options.app = apk_path</code></pre><div class="note"><strong>Не выбираем «первый попавшийся».</strong> Эмулятор и телефон могут быть подключены одновременно.</div><p class="small muted" style="margin-top:20px">Используй учебное устройство. Очистка приложения на личном телефоне — только с согласия владельца.</p></div>
-    </div>
-    <aside class="speaker-notes">В текущем drivers.py explicit udid ещё не добавлен. Покажите, куда передать serial в _local, а не просто смените DEVICE_HOST на real. Unauthorized требует подтверждения на устройстве; не обходите его повторными скриптами. noReset=false может очищать состояние приложения, поэтому согласуйте политику тестовых данных.</aside>
-  </section>
-
-  <section class="slide">
-    <div class="kicker">Практика · локальная сессия</div>
-    <h2>Android: минимальные типизированные options</h2>
+    <div class="kicker">Android Emulator</div>
+    <h2>Сначала запускаем AVD, потом тест</h2>
     <div class="content cols code-left">
-      <pre class="compact"><code>from appium import webdriver
-from appium.options.android import UiAutomator2Options
+      <pre data-lang="bash"><code>adb devices -l
+adb -s "$UDID" shell getprop sys.boot_completed
+adb -s "$UDID" shell getprop ro.product.cpu.abi</code></pre>
+      <div><ul class="list compact"><li>AVD запущен в Device Manager.</li><li>adb показывает статус device.</li><li>Система полностью загрузилась.</li><li>APK подходит по ABI и версии Android.</li></ul></div>
+    </div>
+    <p class="small muted">UDID берём из adb devices. При нескольких устройствах выбираем его явно.</p>
+    <aside class="speaker-notes">sys.boot_completed обычно возвращает 1. Не создавайте Appium-сессию до завершения загрузки. Для первого примера оставьте один запущенный AVD.</aside>
+  </section>
 
-options = UiAutomator2Options()
+  <section class="slide">
+    <div class="kicker">Настоящий Android</div>
+    <h2>Подключаем телефон по USB</h2>
+    <div class="content cols">
+      <div><ol class="list"><li>Включить Developer Options.</li><li>Включить USB debugging.</li><li>Подтвердить доверие компьютеру.</li><li>Проверить adb devices -l.</li></ol></div>
+      <div><pre data-lang="python"><code>options.udid = device_udid
+options.app = apk_path</code></pre><div class="note">deviceName не заменяет UDID: выбираем конкретный телефон или эмулятор.</div><p class="small muted" style="margin-top:20px">В проекте Android запускается с noReset=False. Для практики лучше учебный телефон.</p></div>
+    </div>
+    <aside class="speaker-notes">Явный UDID уже поддерживается в _local. Unauthorized требует подтверждения на самом телефоне. Согласуйте очистку состояния приложения, если используете личное устройство.</aside>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Android driver</div>
+    <h2>Минимальная настройка сессии</h2>
+    <div class="content cols code-left">
+      <pre data-lang="python"><code>options = UiAutomator2Options()
 options.platform_name = "Android"
 options.automation_name = "UiAutomator2"
 options.udid = device_udid
 options.app = apk_path
-options.no_reset = False
 
 driver = webdriver.Remote(
     appium_url, options=options
 )</code></pre>
-      <div><p class="small"><code>appium_url</code> — выбранный учебный сервер.</p><p class="small"><code>device_udid</code> — конкретный serial.</p><p class="small"><code>apk_path</code> — файл на машине Appium Server.</p><div class="note">Если задаём package/activity вручную, они должны соответствовать именно этому APK.</div></div>
+      <div><p class="small"><strong>appium_url</strong> — адрес сервера.</p><p class="small"><strong>device_udid</strong> — serial из adb.</p><p class="small"><strong>apk_path</strong> — файл на сервере.</p><div class="note">Package и activity должны относиться к выбранному APK.</div></div>
     </div>
-    <aside class="speaker-notes">Это учебный пример расширения локальных options, не утверждение о готовом UDID в проекте. Типизированные options создают W3C capabilities. Не копируйте org.wikipedia.alpha для stable org.wikipedia. Автоопределение из APK часто достаточно; ручные activity/package добавляются только по проверенным данным.</aside>
+    <aside class="speaker-notes">Это сокращённый пример options. Полную реализацию покажите в drivers.py: там также задаются permissions, reset и timeout. Импорты UiAutomator2Options и webdriver есть в этом же файле.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">Организация проекта</div>
-    <h2>Меняем конфигурацию, а не тест</h2>
+    <div class="kicker">Структура проекта</div>
+    <h2>У каждого файла своя задача</h2>
     <div class="content cols">
-      <div><pre class="compact"><code>config.py
-    env → выбранный профиль
+      <div><pre><code>config.py
+    читает настройки
 
 drivers.py
-    config → Appium session
+    создаёт сессию
 
 conftest.py
-    fixture → setup / teardown
+    готовит и закрывает драйвер
 
 helpers/attach.py
-    session → Allure artifacts
-
-tests/test_search.py
-    сценарий → содержательная проверка</code></pre></div>
-      <div><h3>Целевой контракт</h3><ul class="list compact"><li><code>PLATFORM</code>: android / ios.</li><li><code>DEVICE_HOST</code>: место запуска.</li><li>Локально: файл + UDID.</li><li>Ферма: доступный URL приложения.</li><li>Секреты: env, не Git и не отчёт.</li></ul><p class="small muted">PLATFORM / iOS / UDID — расширение текущего проекта. Не меняем всё сразу.</p></div>
+    сохраняет вложения</code></pre></div>
+      <div><p>Тест описывает поиск и проверку результата.</p><p>Переключение сервера не должно переписывать весь тест.</p><div class="note">Платформы могут иметь разные экраны и локаторы. Общим остаётся сценарий.</div></div>
     </div>
-    <aside class="speaker-notes">Не создавайте одновременно drivers.py и конкурирующий пакет drivers/. В конфигурации unsupported-комбинации должны отбрасываться до POST /session. .env.example содержит только безопасные примеры, реальный .env не коммитится. Не переносите из эталона backend/API/stand config и private transport override без нужды.</aside>
+    <aside class="speaker-notes">Откройте тест рядом с фабрикой. Покажите, где меняется DEVICE_HOST, где создаются options и где сохраняется session_id. Для небольшого учебного проекта этого разделения достаточно.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">Стабильный тест</div>
-    <h2>Ждём состояние, проверяем смысл</h2>
+    <div class="kicker">Тест поиска</div>
+    <h2>Ждём появления поля поиска</h2>
     <div class="content cols code-left">
-      <pre class="compact"><code>wait = WebDriverWait(driver, config.timeout)
-field = wait.until(
-    EC.visibility_of_element_located(
-        (AppiumBy.ID,
-         "org.wikipedia:id/search_src_text")
-    )
+      <pre data-lang="python"><code>field = open_search_field(
+    driver, config.timeout
 )
-field.send_keys("Python")
-items = wait.until(
-    EC.presence_of_all_elements_located(
-        (AppiumBy.ID,
-         "org.wikipedia:id/page_list_item_title")
-    )
-)
-assert any("Python" in item.text for item in items)</code></pre>
-      <div><ul class="list compact"><li>Explicit waits вместо UI <code>time.sleep</code>.</li><li>Нулевая implicit wait.</li><li>Локаторы сверяем в Inspector.</li><li>Фиксируем локаль и состояние onboarding.</li><li>«Есть любые TextView» — слабый oracle.</li></ul><p class="small muted">На iOS локаторы другие; смысл сценария сохраняется.</p></div>
+field.send_keys("Appium")
+
+assert wait.until(
+    lambda drv: has_elements(drv, RESULT_LOCS)
+)</code></pre>
+      <div><ul class="list compact"><li>Ждём видимый элемент.</li><li>Учитываем onboarding и окно Search widget.</li><li>Проверяем результат поиска.</li></ul><div class="note">Следующий шаг: открыть нужную статью и проверить её заголовок.</div></div>
     </div>
-    <aside class="speaker-notes">Imports EC, WebDriverWait и AppiumBy уже есть в учебном тесте. ID взяты из локального test_search.py, но должны быть сверены для выбранной APK-сборки. Для поиска Python используйте English Wikipedia, чтобы не зависеть от языка. Дальнейший шаг — открыть нужную статью и проверить её заголовок, а не только наличие списка.</aside>
+    <aside class="speaker-notes">Пример взят из текущего Android-теста. RESULT_LOCS поддерживает старый sample и stable Compose. Попросите студентов объяснить разницу между наличием любых элементов и проверкой нужного результата.</aside>
   </section>
 
   <section class="slide dark">
-    <div class="kicker">Allure · наблюдаемость</div>
-    <h2>Упал тест. Что мы хотим увидеть?</h2>
-    <div class="content"><p class="statement">Не «element not found»,<br>а экран, состояние и историю действий.</p><div class="rule" style="background:#a5c8ff"></div><p>Screenshot · XML page source · шаги · доступные логи · видео</p><p class="small muted">Артефакты помогают объяснить сбой, но не превращают красный тест в зелёный.</p></div>
-    <aside class="speaker-notes">Сначала покажите один реальный сбой в учебном изолированном окружении. Сравните traceback без аттачей и с аттачами. Не используйте случайный production-сбой или личное устройство со сторонними данными. Далее показываем жизненный цикл и точки снятия артефактов.</aside>
+    <div class="kicker">Allure</div>
+    <h2>Почему упал тест?</h2>
+    <div class="content"><p class="statement">Последний экран.<br>Дерево элементов.<br>Видео действий.</p><div class="rule" style="background:#a5c8ff"></div><p>Сохраним их в отчёте рядом с ошибкой.</p></div>
+    <aside class="speaker-notes">Покажите один контролируемый сбой на учебном устройстве. Откройте traceback, затем screenshot и XML. Сравните, сколько информации даёт каждое вложение.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">Allure · установка и шаги</div>
-    <h2>Плагин pytest пишет результаты, CLI строит отчёт</h2>
+    <div class="kicker">Allure · шаги и отчёт</div>
+    <h2>Пишем шаги, сохраняем результаты</h2>
     <div class="content cols">
-      <div><pre class="compact"><code>@allure.title("Wikipedia: поиск Python")
-def test_search(driver):
-    with allure.step("Открыть поиск"):
-        open_search(driver)
-    with allure.step("Найти Python"):
-        search(driver, "Python")
-    with allure.step("Проверить результаты"):
-        assert_python_found(driver)</code></pre><p class="small muted" style="margin-top:18px">Пример структуры сценария, не готовые функции проекта.</p></div>
-      <div><pre class="compact"><code>npm install -g allure-commandline@2.34.1
-allure --version
+      <div><pre data-lang="python"><code>with allure.step("Search for Appium"):
+    field.send_keys("Appium")
 
-.venv/bin/pytest tests \
-    --alluredir=allure-results
-
+with allure.step("Verify results"):
+    assert wait.until(
+        lambda drv: has_elements(
+            drv, RESULT_LOCS
+        )
+    )</code></pre></div>
+      <div><pre data-lang="bash"><code>pytest tests
 allure generate allure-results \
-    -o allure-report</code></pre><p class="small muted" style="margin-top:18px">Allure CLI 2 использует Java; JDK 21 уже нужен Android tooling.</p></div>
+    -o allure-report</code></pre><p class="small" style="margin-top:22px">Плагин allure-pytest создаёт результаты. Allure CLI строит из них отчёт.</p><p class="small muted">Установка CLI и отдельные каталоги прогонов — в README.</p></div>
     </div>
-    <aside class="speaker-notes">allure-pytest должен быть в requirements проекта. Здесь используются команды Allure CLI 2, не молчаливый переход на Allure 3. allure-report — новый каталог для этого прогона; не очищайте чужие результаты командой --clean без разрешения. В Windows замените .venv/bin/pytest на .venv\Scripts\pytest.exe. Открывайте отчёт только по явному действию пользователя и через разрешённый процесс проекта.</aside>
+    <aside class="speaker-notes">В pytest.ini уже указан --alluredir=allure-results. Для повторного урока лучше отдельная папка на каждый запуск, чтобы не смешивать результаты. Отчёт открываем через используемый в окружении просмотрщик, а не напрямую как index.html.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">Allure · live artifacts</div>
-    <h2>Screenshot и page source снимаем до quit()</h2>
+    <div class="kicker">Allure · вложения</div>
+    <h2>Screenshot показывает экран, XML — элементы</h2>
     <div class="content cols code-left">
-      <pre class="compact"><code>allure.attach(
+      <pre data-lang="python"><code>allure.attach(
     driver.get_screenshot_as_png(),
     name="Screenshot",
     attachment_type=allure.attachment_type.PNG,
 )
-
 allure.attach(
     driver.page_source,
     name="Page source",
     attachment_type=allure.attachment_type.XML,
 )</code></pre>
-      <div><h3>Два разных вопроса</h3><p><strong>Screenshot:</strong> что было видно?</p><p><strong>Page source:</strong> какие элементы и атрибуты были доступны?</p><div class="note">XML не заменяет картинку. Картинка не заменяет дерево элементов.</div></div>
+      <div><p><strong>Screenshot:</strong> какой экран открыт?</p><p><strong>XML:</strong> какие элементы видит драйвер?</p><div class="note">Оба вложения снимаем до quit().</div></div>
     </div>
-    <aside class="speaker-notes">Снимок при падении нужен раньше, чем финальный screenshot teardown: после очистки экран может измениться. XML может содержать данные пользователя, поэтому не используйте чужие учётки и не прикладывайте секреты. Для карточки ошибки показывайте названия артефактов, которые различают failing state и final state.</aside>
+    <aside class="speaker-notes">Откройте XML рядом с картинкой и найдите нужный элемент. Проверьте названия и типы вложений в helpers/attach.py. На личном телефоне в экран и XML могут попасть личные данные.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">Allure · lifecycle</div>
-    <h2>Сессия завершается при любом исходе теста</h2>
+    <div class="kicker">Allure · завершение сессии</div>
+    <h2>Закрываем драйвер даже после падения</h2>
     <div class="content cols code-left">
-      <pre class="compact"><code>@pytest.fixture
-def driver(config):
-    drv = create_driver(config)
-    session_id = drv.session_id
+      <pre data-lang="python" data-context="function"><code>session_id = drv.session_id
+try:
+    yield drv
+finally:
     try:
-        yield drv
+        attach.screenshot(drv)
+        attach.page_source(drv)
     finally:
-        try:
-            attach.screenshot(drv)
-            attach.page_source(drv)
-        finally:
-            drv.quit()
-        attach.video(config, session_id)</code></pre>
-      <div><ul class="list compact"><li>Запоминаем session_id заранее.</li><li>Live-аттачи — пока драйвер жив.</li><li><code>quit()</code> — гарантированный cleanup.</li><li>Remote video — после quit.</li></ul><div class="note"><strong>Контракт helpers:</strong> ошибки аттачей диагностируются, но не маскируют исходный сбой теста.</div></div>
+        drv.quit()
+    attach.video(config, session_id)</code></pre>
+      <div><ol class="list compact"><li>Сохраняем session_id.</li><li>Снимаем экран и XML.</li><li>Закрываем сессию.</li><li>Скачиваем видео фермы.</li></ol><div class="note">Локальную запись останавливаем ещё до quit().</div></div>
     </div>
-    <aside class="speaker-notes">Эскиз демонстрирует границы, а не исчерпывающую реализацию. attach.screenshot/page_source/video должны сами обрабатывать только свои artifact-ошибки; иначе exception может прервать следующий аттач. Setup после создания драйвера также требует cleanup при падении до yield. Cleanup-failure нельзя просто скрывать: отчёт должен показывать незавершённую сессию как инфраструктурную проблему.</aside>
+    <aside class="speaker-notes">Это схема teardown, не полная фикстура. В проекте есть отдельная обработка ошибки setup и локальной записи. Helpers сообщают об ошибке получения вложения; ошибка screenshot не должна оставлять открытую сессию.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">Allure · failure state</div>
-    <h2>Screenshot в момент падения, не после reset</h2>
+    <div class="kicker">Allure · screenshot при падении</div>
+    <h2>Сохраняем экран до очистки состояния</h2>
     <div class="content cols code-left">
-      <pre class="compact"><code>@pytest.hookimpl(hookwrapper=True)
+      <pre data-lang="python"><code>@pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item, call):
     outcome = yield
     report = outcome.get_result()
-    if report.when != "call" or not report.failed:
-        return
-    drv = item.funcargs.get("driver")
-    if drv is not None:
-        attach.screenshot(
-            drv, "screenshot on failure"
-        )</code></pre>
-      <div><p>Hook выполняется после тестового вызова, до teardown фикстуры.</p><p class="small">Для падения setup нужна отдельная точка сбора в setup-ветке фикстуры.</p><div class="note">Проверяем контролируемым падением: исходная ошибка сохранена, аттачи есть, сессия закрыта.</div></div>
+    if report.when == "call" and report.failed:
+        drv = item.funcargs.get("driver")
+        if drv is not None:
+            attach.screenshot(drv, "failure")</code></pre>
+      <div><p>Hook срабатывает после теста, но до teardown.</p><p class="small">Если упал setup, экран сохраняется отдельно в фикстуре.</p><div class="note">Проверим на намеренно неверном assert.</div></div>
     </div>
-    <aside class="speaker-notes">Этот call-failure hook уже есть в локальной ветке. Сверьте его с текущим кодом, не добавляйте второй. attach.screenshot должен быть best-effort, иначе ошибка артефакта станет ошибкой hook. Не оставляйте намеренно падающий тест в финальном наборе; используйте существующий runner и согласованный временный сценарий.</aside>
+    <aside class="speaker-notes">Этот hook уже есть в проекте. Покажите красный тест и screenshot on failure. После демонстрации верните корректный assert; в сдаваемом наборе не оставляйте случайное падение.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">Allure · логи и видео</div>
-    <h2>Один интерфейс, разные источники артефактов</h2>
-    <div class="content"><table aria-label="Источники артефактов"><thead><tr><th>Источник</th><th>Что собираем</th><th>Когда</th></tr></thead><tbody><tr><td>Локальный Android</td><td>PNG, XML, доступный logcat; запись при поддержке</td><td>Пока сессия жива</td></tr><tr><td>Локальный iOS</td><td>PNG, XML, доступные логи; запись при поддержке</td><td>Пока сессия жива</td></tr><tr><td>Selenoid</td><td>PNG/XML через driver; MP4 от фермы</td><td>Видео после quit</td></tr><tr><td>BrowserStack</td><td>PNG/XML; артефакты App Automate API</td><td>Remote artifacts по session_id</td></tr></tbody></table><div class="note">Нет нужного log type или записи? Сообщаем ограничение. Не называем отсутствующий файл успешно собранным.</div></div>
-    <aside class="speaker-notes">driver.log_types и get_log поддерживаются не одинаково. Лог Appium Server не обязан быть WebDriver log type. Локальное видео может требовать screenrecord/ffmpeg и иных optional-зависимостей — проверяйте документацию выбранного драйвера. Не добавляйте зависимости записи автоматически ради прохождения теста.</aside>
+    <div class="kicker">Allure · что собирает проект</div>
+    <h2>Источники вложений</h2>
+    <div class="content"><table aria-label="Источники вложений"><thead><tr><th>Где запускаем</th><th>Что получаем</th><th>Видео</th></tr></thead><tbody><tr><td>Локальный Android</td><td>PNG, XML, запись экрана</td><td>До quit</td></tr><tr><td>Локальный iOS</td><td>PNG, XML, запись при поддержке</td><td>До quit</td></tr><tr><td>Selenoid</td><td>PNG, XML, MP4 фермы</td><td>После quit</td></tr><tr><td>BrowserStack</td><td>PNG, XML, видео и ссылка на сессию</td><td>После quit</td></tr></tbody></table><div class="note">Логи Appium и logcat пока не собираются автоматически.</div></div>
+    <aside class="speaker-notes">На локальном устройстве запись может не поддерживаться или требовать дополнительных инструментов. Если start_recording_screen не сработал, текущая фикстура продолжает тест без видео. Поэтому наличие MP4 проверяем отдельно. Получение PNG/XML не зависит от готовности видео фермы.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">Практика · Selenoid</div>
-    <h2>Учебная ферма selenoid.qa.guru — только Android</h2>
+    <div class="kicker">Selenoid</div>
+    <h2>Как ферма выбирает Android-контейнер</h2>
     <div class="content cols code-left">
-      <pre class="compact"><code>options.set_capability("browserName", "android")
-options.set_capability(
-    "browserVersion", catalog_android_version
-)
+      <pre data-lang="python"><code>options.set_capability("browserName", "android")
+options.set_capability("browserVersion", version)
 options.app = apk_url
 options.set_capability(
     "selenoid:options",
     {"enableVNC": True, "enableVideo": True},
-)
-
-driver = webdriver.Remote(
-    approved_hub_url, options=options
 )</code></pre>
-      <div><ul class="list compact"><li>Версия Android — из актуального каталога.</li><li>APK URL должен быть доступен ферме.</li><li>Авторизация — env, не слайды и не Git.</li><li>Отдельные options, не весь local-профиль.</li></ul><div class="note">В текущем маршруте <code>appPackage</code> не совмещаем с routing <code>browserName=android</code>.</div></div>
+      <div><ul class="list compact"><li>Версия берётся из каталога фермы.</li><li>APK скачивается по URL.</li><li>VNC показывает экран.</li><li>enableVideo включает запись.</li></ul><p class="small muted">По умолчанию: Android 16.0.</p></div>
     </div>
-    <aside class="speaker-notes">Показаны дополнения к UiAutomator2Options выбранного профиля, а не вся конфигурация. Selenoid использует browserName для маршрутизации, поэтому его capabilities отличаются от прямого Appium. Ограничение appPackage + browserName видно в драйвере учебного проекта и эталоне. Полный контракт подтвердите минимальным разрешённым smoke; не угадывайте версию 13/16 из старых defaults. Ферму, каталог и лимиты не менять.</aside>
+    <aside class="speaker-notes">Покажите _selenoid в drivers.py. Не передавайте appPackage вместе с browserName=android: текущий контейнер это сочетание отклоняет. Доступ задаётся через SELENOID_*; пароль не помещается в адрес сервера.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">Практика · remote video</div>
-    <h2>Видео появляется не в момент screenshot</h2>
-    <div class="content"><div class="flow"><div class="step"><strong>enableVideo</strong><span>До создания сессии</span></div><span class="arrow">→</span><div class="step"><strong>session_id</strong><span>Сохраняем до quit</span></div><span class="arrow">→</span><div class="step"><strong>quit</strong><span>Ферма завершает запись</span></div><span class="arrow">→</span><div class="step"><strong>MP4</strong><span>Получаем с timeout</span></div></div><pre class="compact"><code>video_path = f"/video/{session_id}.mp4"
+    <div class="kicker">Selenoid · видео</div>
+    <h2>Сначала quit(), потом MP4</h2>
+    <div class="content"><div class="flow"><div class="step"><strong>Запись</strong><span>enableVideo</span></div><span class="arrow">→</span><div class="step"><strong>Сессия</strong><span>session_id</span></div><span class="arrow">→</span><div class="step"><strong>quit()</strong><span>Завершение записи</span></div><span class="arrow">→</span><div class="step"><strong>MP4</strong><span>Скачивание файла</span></div></div><pre data-lang="python"><code>video_path = f"/video/{session_id}.mp4"
 allure.attach(
-    video_bytes,
-    name="Video",
+    video_bytes, name="Video",
     attachment_type=allure.attachment_type.MP4,
-)</code></pre><p class="small muted" style="margin-top:18px">Путь — для стандартного videoName. Авторизацию и способ получения проверяем по контракту фермы.</p></div>
-    <aside class="speaker-notes">Не fetch видео до quit, когда MP4 ещё не финализирован. Ожидание публикации должно быть ограниченным, с понятной диагностикой и timeout; бесконечный polling не нужен. Если используется custom videoName, session_id.mp4 уже не правильное имя. HTML со внешней ссылкой менее автономен, чем MP4-аттач, и может зависеть от авторизации/срока жизни ссылки.</aside>
+)</code></pre><p class="small muted" style="margin-top:20px">Helper ждёт появления файла, но не бесконечно.</p></div>
+    <aside class="speaker-notes">Покажите _selenoid_video: файл запрашивается на том же сервере, с той же авторизацией. Путь session_id.mp4 используется при стандартном имени записи. Если MP4 не получен, в Allure появляется пояснение.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">Практика · BrowserStack</div>
-    <h2>Существующий облачный маршрут сохраняем</h2>
+    <div class="kicker">BrowserStack</div>
+    <h2>Облачный запуск из первого занятия</h2>
     <div class="content cols">
-      <div><h3>Конфигурация</h3><pre class="compact"><code>BROWSERSTACK_USERNAME
-BROWSERSTACK_ACCESS_KEY
-BROWSERSTACK_APP
-
-DEVICE_HOST=browserstack</code></pre><p class="small muted" style="margin-top:20px">Имена параметров из проекта. Значения секретов не показываем.</p></div>
-      <div><ul class="list"><li>Appium-сессия и артефакты связаны через session_id.</li><li>Видео получаем через App Automate API.</li><li><code>bs://...</code> — загруженная сборка приложения.</li></ul><div class="note">App Live ≠ App Automate. Установка из App Store на своём iPhone не заменяет загрузку IPA в облако.</div></div>
+      <div><pre data-lang="bash"><code>DEVICE_HOST=browserstack pytest tests</code></pre><p class="small" style="margin-top:22px">Данные доступа и BROWSERSTACK_APP задаём в .env.</p></div>
+      <div><ul class="list"><li>Приложение загружается в App Automate.</li><li>Сессия получает свой session_id.</li><li>По нему API возвращает видео.</li></ul><div class="note">App Store приложение на вашем iPhone не заменяет загрузку IPA в облако.</div></div>
     </div>
-    <aside class="speaker-notes">Первый урок уже использует BrowserStack, поэтому не начинайте настройку облака заново. В публичном main были опубликованы данные доступа; владелец должен отозвать ключ, а проект — читать новые значения из env. Не выводите значения, не коммитьте .env и не переписывайте историю без отдельного запроса. Не тратьте оплачиваемые сессии без разрешения.</aside>
+    <aside class="speaker-notes">Сравните helpers/browserstack.py с получением видео Selenoid. Публичные ключи из старого main должны быть отозваны владельцем. Значения ключей не показываем на экране и не добавляем в Git.</aside>
   </section>
 
   <section class="slide dark">
-    <div class="kicker">iOS · отдельный блок</div>
-    <h2>Симулятор и iPhone требуют разных сборок</h2>
-    <div class="content"><p class="statement">Подписать WebDriverAgent<br>не значит пересобрать Wikipedia.</p><div class="rule" style="background:#a5c8ff"></div><p>Simulator — подготовленная .app.<br>iPhone — App Store приложение + WDA.</p></div>
-    <aside class="speaker-notes">Объясните это до установки Xcode и обсуждения IPA. Для предустановленного App Store приложения можно использовать bundleId. WDA — отдельный helper для управления UI. Не обещайте универсальную IPA, которая одинаково ставится на Simulator и любой настоящий iPhone.</aside>
+    <div class="kicker">iOS</div>
+    <h2>Два способа подготовить Wikipedia</h2>
+    <div class="content"><p class="statement">Simulator: готовим .app.<br>iPhone: ставим приложение из App Store.</p><div class="rule" style="background:#a5c8ff"></div><p>Для управления iPhone отдельно настраиваем WDA.</p></div>
+    <aside class="speaker-notes">Наша фабрика умеет создать iOS-драйвер. Тест поиска ещё нужно адаптировать: текущие UiSelector и Android-идентификаторы на iOS не работают.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">Подготовка · iOS</div>
-    <h2>Mac, полный Xcode, runtime и XCUITest</h2>
-    <div class="content cols">
-      <div><ul class="list compact"><li>Установить полный Xcode.</li><li>Проверить selected developer directory.</li><li>Установить нужный Simulator runtime.</li><li>Проверить Xcode ↔ macOS ↔ iOS ↔ driver.</li><li>Appium Server и XCUITest на Mac.</li></ul><p class="small muted">Command Line Tools без полного Xcode недостаточно для всей цепочки.</p></div>
-      <div><pre class="compact"><code>xcode-select -p
+    <div class="kicker">iOS · рабочее место</div>
+    <h2>Mac, Xcode и XCUITest</h2>
+    <div class="content cols code-left">
+      <pre data-lang="bash"><code>xcode-select -p
 xcodebuild -version
 xcrun simctl list devices available
 
-appium driver list --installed
-appium driver doctor xcuitest</code></pre><div class="note">Несовместимая матрица — причина остановиться и выбрать поддерживаемую комбинацию, не поставить всё latest.</div></div>
+appium driver install xcuitest@12.8.0
+appium driver doctor xcuitest</code></pre>
+      <div><ul class="list compact"><li>Нужен полный Xcode.</li><li>Нужен установленный runtime.</li><li>Версии Xcode и iOS должны подходить драйверу.</li></ul><div class="note">Command Line Tools не заменяют полный Xcode.</div></div>
     </div>
-    <aside class="speaker-notes">Не меняйте выбранный Xcode, лицензию, runtimes и системные настройки без согласия владельца. На машине с несколькими Xcode сначала определите фактический path. Локальная подготовка сервера iOS выполняется на Mac; Windows/Linux студент может использовать удалённый согласованный Mac-сервер, но не локальный Xcode.</aside>
+    <aside class="speaker-notes">Проверьте выбранный Xcode, если их несколько. Разрешения, лицензию и установку runtime подтверждает владелец компьютера. Подробная таблица совместимости есть по ссылке в README.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">iOS · форматы</div>
-    <h2>.app для Simulator ≠ .ipa для iPhone</h2>
+    <div class="kicker">iOS · сборки</div>
+    <h2>Для Simulator нужна своя .app</h2>
     <div class="content cols">
-      <div><h3>Simulator</h3><ul class="list"><li>Сборка для <code>iphonesimulator</code>.</li><li><code>.app</code> или архив с .app.</li><li>Подходящая архитектура host.</li><li>Не нужен платный Developer account.</li></ul></div>
-      <div><h3>Настоящий iPhone</h3><ul class="list"><li>Device build с совместимой подписью.</li><li>Или установленное App Store приложение.</li><li>UDID конкретного телефона.</li><li>WDA требует signing/provisioning.</li></ul></div>
+      <div><h3>Simulator</h3><ul class="list"><li>Сборка для iphonesimulator.</li><li>.app или архив с .app.</li><li>Архитектура под ваш Mac.</li><li>Платная Developer-учётка не нужна.</li></ul></div>
+      <div><h3>Настоящий iPhone</h3><ul class="list"><li>Установленное App Store приложение.</li><li>Или подписанная device-сборка.</li><li>UDID конкретного телефона.</li><li>Подготовленный WDA.</li></ul></div>
     </div>
-    <aside class="speaker-notes">Наличие arm64 в обоих файлах не делает их взаимозаменяемыми: отличаются SDK/target platform. Для Simulator не требуется developer provisioning как для настоящего устройства. Для установки собственного device build действуют ограничения подписи; App Store приложение уже установлено легальным магазинным маршрутом.</aside>
+    <aside class="speaker-notes">Одинаковая архитектура arm64 не делает device и simulator сборки взаимозаменяемыми: они собраны для разных платформ. Не пытайтесь поставить обычную IPA в Simulator.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">iOS · Wikipedia Simulator</div>
-    <h2>Сборку готовим до занятия, не всем классом live</h2>
+    <div class="kicker">iOS · сборка Wikipedia</div>
+    <h2>Готовим Simulator-приложение до урока</h2>
     <div class="content cols code-left">
-      <pre class="compact"><code>xcodebuild \
-    -project Wikipedia.xcodeproj \
-    -scheme Wikipedia \
-    -configuration Debug \
-    -sdk iphonesimulator \
-    -destination 'generic/platform=iOS Simulator' \
-    -derivedDataPath ./build \
-    CODE_SIGNING_ALLOWED=NO</code></pre>
-      <div><span class="tag">ШАБЛОН СБОРКИ</span><ul class="list compact"><li>Выделенная копия официальных исходников.</li><li>Зафиксированный commit/release.</li><li>Проверенные scheme и зависимости.</li><li>Готовая .app с проверенной архитектурой.</li></ul><p class="small muted">Upstream setup ставит линтеры и hook. Не запускаем его вслепую и не удаляем проверки.</p></div>
+      <pre data-lang="bash"><code>xcodebuild \
+  -project Wikipedia.xcodeproj \
+  -scheme Wikipedia \
+  -sdk iphonesimulator \
+  -destination 'generic/platform=iOS Simulator' \
+  -derivedDataPath ./build \
+  CODE_SIGNING_ALLOWED=NO</code></pre>
+      <div><ul class="list compact"><li>Берём официальные исходники.</li><li>Выбираем конкретную версию.</li><li>Проверяем зависимости сборки.</li><li>Передаём студентам готовую .app.</li></ul><p class="small muted">Полная команда и настройки — в README.</p></div>
     </div>
-    <aside class="speaker-notes">README Wikipedia iOS требует Xcode не ниже 16, но это не заменяет актуальную матрицу драйвера. Команда — шаблон, не проверенная в этом сеансе сборка: заранее проверьте проект, schemes, upstream prerequisites и путь к продукту. Последний GitHub release не даёт готовой .app. Студентам лучше выдать подготовленный simulator-архив с manifest версии/архитектуры/SHA-256.</aside>
+    <aside class="speaker-notes">Команда показывает основу сборки. В README указана Debug-конфигурация; перед уроком проверьте scheme и результат xcodebuild. Upstream setup устанавливает линтеры и hook — прочитайте его перед запуском. Не собирайте приложение всем классом в эфире.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">Практика · iOS Simulator</div>
-    <h2>Simulator сессия через XCUITestOptions</h2>
+    <div class="kicker">iOS · Simulator driver</div>
+    <h2>Настраиваем XCUITestOptions</h2>
     <div class="content cols code-left">
-      <pre class="compact"><code>from appium import webdriver
-from appium.options.ios import XCUITestOptions
-
-options = XCUITestOptions()
+      <pre data-lang="python"><code>options = XCUITestOptions()
 options.platform_name = "iOS"
 options.automation_name = "XCUITest"
 options.udid = simulator_udid
 options.app = simulator_app_path
-options.no_reset = False
 
 driver = webdriver.Remote(
     appium_url, options=options
 )</code></pre>
-      <div><p class="small"><code>simulator_udid</code> — из simctl/Xcode.</p><p class="small"><code>simulator_app_path</code> — проверенная .app на Mac-сервере.</p><div class="note">Android <code>resource-id</code> нельзя перенести на iOS. Используй Inspector и accessibility identifiers.</div><p class="small muted" style="margin-top:18px">Учебное расширение: iOS factory в текущем проекте ещё нет.</p></div>
+      <div><p class="small"><strong>UDID</strong> берём из simctl.</p><p class="small"><strong>IOS_APP</strong> указывает на .app.</p><div class="note">В конфигурации используем DEVICE_HOST=ios_simulator.</div><p class="small muted" style="margin-top:20px">DEVICE_NAME и PLATFORM_VERSION задаём для своего runtime.</p></div>
     </div>
-    <aside class="speaker-notes">Для уже установленного приложения на Simulator также возможен bundleId/noReset. Здесь показываем файловый путь. Не подставляйте название iPhone вместо UDID и не угадывайте platformVersion: берите их из доступного runtime. После этого отдельно проверяем onboarding, язык и локаторы.</aside>
+    <aside class="speaker-notes">Функция _ios_simulator уже есть в проекте. После создания сессии нужно отдельно перенести onboarding и локаторы теста. Общие значения имени/версии устройства в config.py рассчитаны на Android, поэтому для iOS задаём их явно.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">Подготовка · настоящий iPhone</div>
-    <h2>Сначала доверие и WDA, потом тест Wikipedia</h2>
+    <div class="kicker">iOS · настоящий iPhone</div>
+    <h2>Подключаем устройство и подписываем WDA</h2>
     <div class="content cols">
-      <div><ol class="list compact"><li>Подключить iPhone и выполнить pairing в Xcode.</li><li>На телефоне подтвердить Trust This Computer.</li><li>Включить Developer Mode.</li><li>Проверить UI Automation в Developer settings.</li><li>Выбрать Apple Account / Team для WDA.</li><li>Подписать и проверить первый запуск WDA.</li></ol></div>
-      <div><pre class="compact"><code>appium driver run xcuitest open-wda</code></pre><p class="small" style="margin-top:22px"><strong>Personal Team:</strong> ручная настройка, ограничения и срок действия provisioning.</p><p class="small"><strong>Paid account:</strong> доступна автоматическая конфигурация согласно документации.</p><div class="note">Доверие, аккаунт и подпись подтверждает владелец. Никакого обхода 2FA и trust checks.</div></div>
+      <div><ol class="list compact"><li>Подключить iPhone к Mac.</li><li>Выполнить pairing в Xcode.</li><li>Подтвердить доверие компьютеру.</li><li>Включить Developer Mode и UI Automation.</li><li>Настроить Team и подпись WDA.</li></ol></div>
+      <div><pre data-lang="bash"><code>appium driver run xcuitest open-wda</code></pre><p class="small" style="margin-top:22px">WDA — отдельное приложение для управления UI.</p><p class="small">Personal Team подходит для ручной настройки, но профиль имеет ограничения и срок действия.</p></div>
     </div>
-    <aside class="speaker-notes">Appium поддерживает free и paid Apple Accounts, но автоматический provisioning guide ориентирован на paid account. Personal Team настраивается вручную через WDA project и подходящий bundle identifier. Ошибки xcodebuild 65/70 диагностируйте как signing/configuration, не «лечите» удалением всего Xcode/перезапуском инфраструктуры. Права владельца требуются отдельно.</aside>
+    <aside class="speaker-notes">Сначала проверьте, что WDA запускается на этом телефоне. Не пытайтесь решить ошибку подписи заменой локаторов. Ссылка на пошаговую настройку free и paid account есть в README.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">Практика · App Store Wikipedia</div>
-    <h2>На iPhone не обязательно собирать собственную IPA</h2>
+    <div class="kicker">iOS · Wikipedia из App Store</div>
+    <h2>Запускаем установленное приложение по bundleId</h2>
     <div class="content cols code-left">
-      <pre class="compact"><code>options = XCUITestOptions()
-options.platform_name = "iOS"
-options.automation_name = "XCUITest"
-options.udid = iphone_udid
-options.bundle_id = installed_bundle_id
+      <pre data-lang="python"><code>options.udid = iphone_udid
+options.bundle_id = "org.wikimedia.wikipedia"
 options.no_reset = True
 
 driver = webdriver.Remote(
     appium_url, options=options
 )</code></pre>
-      <div><ul class="list compact"><li>Установить Wikipedia из App Store.</li><li>Проверить фактический bundleId.</li><li>Использовать предварительно настроенный WDA.</li><li>Управлять состоянием через UI.</li></ul><div class="note"><code>app</code> не передаём: приложение уже установлено. Не делаем fullReset с последующей «магической» переустановкой.</div></div>
+      <div><ul class="list compact"><li>Wikipedia уже установлена.</li><li>WDA настроен для этого iPhone.</li><li>Пересборка Wikipedia не нужна.</li></ul><div class="note">Не передаём app: установка из файла в этом примере не нужна.</div></div>
     </div>
-    <aside class="speaker-notes">Документация XCUITest явно описывает pre-installed app: bundleId + udid + noReset=true. Signing capabilities либо ручной/prebuilt WDA выбираются отдельно и не входят в этот минимальный пример. Нельзя предполагать пустое состояние: onboarding может быть уже пройден, история сохранена. Не очищайте личные данные ради повторяемости — используйте учебное приложение/устройство и явные предусловия.</aside>
+    <aside class="speaker-notes">BundleId подтверждён официальными данными Apple. В текущем config.py default другой, поэтому задаём BUNDLE_ID явно. noReset=True здесь показан по рекомендации Appium для pre-installed app; в _ios_real он пока не выставлен. Обсудите состояние приложения до запуска на личном телефоне. iOS-локаторы теста тоже ещё нужны.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">Диагностика</div>
-    <h2>Ищем сбой на нужном участке цепочки</h2>
-    <div class="content"><table aria-label="Диагностика типовых ошибок"><thead><tr><th>Симптом</th><th>Проверяем</th></tr></thead><tbody><tr><td>Не создаётся сессия</td><td>Endpoint/base path, driver, platform, capabilities, доступ</td></tr><tr><td>adb: unauthorized / offline</td><td>Доверие на телефоне, подключение, полный boot</td></tr><tr><td>Приложение не установилось</td><td>Файл на сервере, URL с фермы, ABI, SDK, подпись</td></tr><tr><td>Element not found</td><td>PNG + XML, onboarding, локаль, версия приложения</td></tr><tr><td>xcodebuild: 65 / 70</td><td>WDA signing/provisioning, Xcode/OS configuration</td></tr><tr><td>Нет remote video</td><td>enableVideo, session_id, quit, публикация и авторизация</td></tr></tbody></table></div>
-    <aside class="speaker-notes">Начинаем с минимального разрешённого probe фактической границы. Если нет доступа или подписанной сборки — BLOCKED, а не ремонт инфраструктуры. Не добавляем автоперезапуски, retries и массовые cleanup-команды. Screenshot системного диалога ANR объясняет проблему приложения, но постоянное нажатие Wait не считается исправлением причины.</aside>
+    <div class="kicker">Когда что-то не работает</div>
+    <h2>С чего начать проверку</h2>
+    <div class="content"><table aria-label="Типовые ошибки"><thead><tr><th>Что произошло</th><th>Что проверить</th></tr></thead><tbody><tr><td>Нет сессии</td><td>Сервер, base path, driver и доступ</td></tr><tr><td>adb: unauthorized / offline</td><td>Доверие на телефоне, кабель, загрузку Android</td></tr><tr><td>Не установилось приложение</td><td>Путь или URL, ABI, SDK, подпись</td></tr><tr><td>Не найден элемент</td><td>Screenshot, XML, onboarding, версию приложения</td></tr><tr><td>xcodebuild: 65 / 70</td><td>Подпись WDA и выбранный Xcode/iOS</td></tr><tr><td>Нет видео</td><td>Запись, quit, публикацию MP4 и доступ</td></tr></tbody></table></div>
+    <aside class="speaker-notes">Разбирайте ошибку по участкам цепочки из четвёртого слайда. При отсутствии доступа не перенастраивайте общую ферму. Подробные подсказки приведены в README.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">Сценарий демонстрации</div>
-    <h2>Один тест переносим по маршрутам</h2>
+    <div class="kicker">Порядок практики</div>
+    <h2>Показываем на одном Android-тесте</h2>
     <div class="content cols">
-      <div><h3>Основная практика</h3><ol class="list compact"><li>Открыть текущий тест и config/factory.</li><li>Inspector: проверить экран и локатор.</li><li>Запустить поиск на Android Emulator.</li><li>Показать содержательный assert.</li><li>Контролируемое падение → Allure.</li><li>Тот же сценарий → Android Selenoid.</li></ol></div>
-      <div><h3>Демонстрации преподавателя</h3><ul class="list compact"><li>Android Emulator → настоящий Android по UDID.</li><li>Simulator с подготовленной Wikipedia .app.</li><li>iPhone с App Store Wikipedia и WDA.</li><li>Сравнить аттачи и возможности backend.</li></ul><div class="note">Меняем host/platform и локаторы, не смысл сценария. Студентам без Mac доступна Android-практика.</div></div>
+      <div><h3>Сначала локально</h3><ol class="list"><li>Находим элемент в Inspector.</li><li>Запускаем поиск на AVD.</li><li>Вызываем контролируемое падение.</li><li>Разбираем Allure.</li></ol></div>
+      <div><h3>Затем меняем устройство</h3><ul class="list"><li>Выбираем телефон по UDID.</li><li>Запускаем на Selenoid.</li><li>Сравниваем видео и экран.</li></ul><div class="note">Для iOS отдельно показываем настройку драйвера и перенос локаторов.</div></div>
     </div>
-    <aside class="speaker-notes">Заранее прогрейте согласованное устройство, подтвердите доступ фермы, подготовьте simulator build и WDA. Не делайте сборку чужого приложения и оформление Apple Account всем классом в эфире. Оставьте отдельный демонстрационный сценарий падения и возврат к зелёному прогону. Презентация не устанавливает длительность урока самостоятельно.</aside>
+    <aside class="speaker-notes">AVD, APK и доступ к ферме подготовьте заранее. Не тратьте эфир на cold boot и регистрацию Apple account. После показа падения верните рабочую проверку.</aside>
   </section>
 
   <section class="slide">
     <div class="kicker">Домашнее задание</div>
-    <h2>Небольшой проект, понятные доказательства</h2>
+    <h2>Добавьте проверки и инструкцию запуска</h2>
     <div class="content cols">
-      <div><h3>Обязательная часть · Android</h3><ul class="list compact"><li>2–4 содержательных теста Wikipedia.</li><li>Emulator и один разрешённый удалённый профиль.</li><li>Конфигурация без секретов в Git.</li><li>Allure: шаги, screenshot, XML.</li><li>Видео там, где оно поддерживается.</li><li>Инструкция запуска с закреплённой APK.</li></ul></div>
-      <div><h3>Дополнительная часть</h3><ul class="list compact"><li>Явный UDID настоящего Android.</li><li>iOS Simulator с подготовленной .app.</li><li>iPhone/App Store + настроенный WDA.</li><li>Короткое объяснение различий среды и аттачей.</li></ul><div class="note">Нет устройства или доступа? Укажи BLOCKED и что нужно для запуска. Не подменяй E2E моками.</div></div>
+      <div><h3>Android</h3><ul class="list compact"><li>2–4 проверки Wikipedia.</li><li>Локальный и один удалённый запуск.</li><li>Шаги, screenshot и XML в Allure.</li><li>Видео там, где оно поддерживается.</li><li>Инструкция без ключей и паролей.</li></ul></div>
+      <div><h3>Дополнительно</h3><ul class="list compact"><li>Запуск на настоящем Android.</li><li>iOS-локаторы и onboarding.</li><li>Тест на Simulator или iPhone.</li></ul><div class="note">Проверяйте найденную статью, а не просто наличие любых элементов.</div></div>
     </div>
-    <aside class="speaker-notes">Сверьте домашнее задание с фактической программой Mobile 2 после получения GetCourse материалов. Для поиска можно проверить именованный результат, открыть статью и проверить заголовок, проверить очистку запроса. Бонусы не должны делать Mac/iPhone обязательными. Не требуйте Sonar, static analysis, API users и сложный multistack framework.</aside>
+    <aside class="speaker-notes">Варианты проверок: найти Python, открыть нужную статью, проверить заголовок, очистить запрос. iOS остаётся дополнительной частью. Окончательное задание нужно сверить с программой Mobile 2 в GetCourse.</aside>
   </section>
 
   <section class="slide">
     <div class="kicker">Перед занятием</div>
-    <h2>Checklist преподавателя</h2>
+    <h2>Что проверить преподавателю</h2>
     <div class="content cols">
-      <div><h3>Приложение и устройства</h3><ul class="list compact"><li>APK: версия, SHA-256, ABI, локаторы.</li><li>AVD запущен, adb видит нужный serial.</li><li>Учебная ферма доступна и разрешена.</li><li>Simulator .app реально запускается.</li><li>WDA настроен для конкретного iPhone.</li></ul></div>
-      <div><h3>Код и отчёт</h3><ul class="list compact"><li>Подтверждён стартовый commit и scope.</li><li>Один smoke на каждом показываемом маршруте.</li><li>Красный тест сохраняет исходную ошибку.</li><li>PNG/XML/MP4 открываются в отчёте.</li><li>Сессии завершаются, секретов в артефактах нет.</li></ul></div>
+      <div><h3>Устройства и приложение</h3><ul class="list compact"><li>AVD уже загружен.</li><li>APK скачан и проверен.</li><li>UDID выбран правильно.</li><li>Ферма доступна.</li><li>Для iOS готовы .app или WDA.</li></ul></div>
+      <div><h3>Тест и отчёт</h3><ul class="list compact"><li>Есть успешный пробный прогон.</li><li>Есть понятный пример падения.</li><li>Вложения открываются в Allure.</li><li>Сессия закрывается после ошибки.</li><li>В отчёте нет секретов и личных данных.</li></ul></div>
     </div>
-    <aside class="speaker-notes">Статусы разделяйте: docs verified, collection PASS, device smoke PASS, BLOCKED, NOT_RUN. Для подготовки этих слайдов выполнены чтение кода, проверка официальных источников/npm metadata и рендер презентации. Mobile smoke, сборка Wikipedia и регистрация/подпись WDA в этом сеансе не выполнялись. Программы GetCourse всё ещё требуют авторизованного чтения.</aside>
+    <aside class="speaker-notes">При подготовке этих материалов проверялись код, команды и сама презентация, не мобильные запуски. Устройство и доступ нужно проверить до урока. Collection не заменяет такой прогон.</aside>
   </section>
 
   <section class="slide">
-    <div class="kicker">Источники и запасной вариант</div>
-    <h2>Официальные документы, а не угадывание</h2>
+    <div class="kicker">Ссылки</div>
+    <h2>Код и документация</h2>
     <div class="content cols">
-      <ul class="list sources"><li><a href="https://github.com/qa-guru/python-appium">qa-guru/python-appium</a></li><li><a href="https://appium.io/docs/en/3.5/quickstart/requirements/">Appium 3: system requirements</a></li><li><a href="https://github.com/appium/appium-uiautomator2-driver">UiAutomator2: requirements и capabilities</a></li><li><a href="https://appium.github.io/appium-inspector/latest/quickstart/installation/">Appium Inspector: установка</a></li><li><a href="https://appium.github.io/appium-xcuitest-driver/latest/getting-started/system-requirements/">XCUITest: матрица совместимости</a></li></ul>
-      <ul class="list sources"><li><a href="https://appium.github.io/appium-xcuitest-driver/latest/getting-started/provisioning-profile/">WDA: provisioning и Apple Account</a></li><li><a href="https://appium.github.io/appium-xcuitest-driver/12.6/guides/capability-sets/">XCUITest: pre-installed app и Simulator</a></li><li><a href="https://github.com/wikimedia/wikipedia-ios">Wikipedia iOS: исходники и сборка</a></li><li><a href="https://www.browserstack.com/docs/app-automate/appium/set-up-tests/specify-app">BrowserStack: контракт приложения</a></li><li><a href="https://github.com/webdriverio/native-demo-app/releases/tag/v2.2.0">WDIO demo: APK + Simulator .app</a></li></ul>
+      <ul class="list sources"><li><a href="https://github.com/qa-guru/python-appium">Учебный python-appium</a></li><li><a href="https://appium.io/docs/en/3.5/quickstart/requirements/">Требования Appium</a></li><li><a href="https://github.com/appium/appium-uiautomator2-driver">UiAutomator2</a></li><li><a href="https://appium.github.io/appium-inspector/latest/quickstart/installation/">Установка Inspector</a></li><li><a href="https://appium.github.io/appium-xcuitest-driver/latest/getting-started/system-requirements/">Совместимость XCUITest</a></li></ul>
+      <ul class="list sources"><li><a href="https://appium.github.io/appium-xcuitest-driver/latest/getting-started/provisioning-profile/">Подпись WebDriverAgent</a></li><li><a href="https://appium.github.io/appium-xcuitest-driver/12.6/guides/capability-sets/">Примеры iOS capabilities</a></li><li><a href="https://github.com/wikimedia/wikipedia-ios">Исходники Wikipedia iOS</a></li><li><a href="https://itunes.apple.com/lookup?id=324715238">BundleId Wikipedia у Apple</a></li><li><a href="https://github.com/webdriverio/native-demo-app/releases/tag/v2.2.0">Запасное приложение: WDIO demo</a></li></ul>
     </div>
-    <p class="small muted">WDIO demo — запасной вариант для Android и iOS Simulator. Готового physical-iPhone build нет.</p>
-    <aside class="speaker-notes">Материалы подготовлены по доступному коду и официальным документам на 14.10.2026. Это не подтверждённая копия программы GetCourse и не протокол успешных запусков. Смену Wikipedia на WDIO demo согласовать отдельно: она меняет сценарии и не закрывает автоматически настоящие iPhone. HTML автономен; для открытия внешних источников потребуется сеть.</aside>
+    <p class="small muted">WDIO demo даёт APK и готовую Simulator .app. Сборки для настоящего iPhone в релизе нет.</p>
+    <aside class="speaker-notes">Полные команды перенесены в README, чтобы не читать длинные инструкции со слайда. HTML работает без сервера; внешние ссылки требуют сети. Программы GetCourse пока не сверены из-за авторизации.</aside>
   </section>
 </main>
 <nav id="controls" aria-label="Управление презентацией">
