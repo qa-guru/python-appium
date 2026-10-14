@@ -71,6 +71,8 @@ def _local(config: TestConfig) -> UiAutomator2Options:
         )
     options = _android_base(config, with_package=True)
     options.app = str(path.resolve())
+    if config.udid:
+        options.udid = config.udid  # real device serial, or emulator-5554
     options.set_capability("appium:ignoreHiddenApiPolicyError", True)
     return options
 
