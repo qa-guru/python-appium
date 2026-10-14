@@ -15,14 +15,20 @@ def test_successful_search(driver, config):
         first_visible(driver, SEARCH_LOCS, config.timeout).click()
         field = wait.until(
             EC.visibility_of_element_located(
-                (AppiumBy.ID, "org.wikipedia.alpha:id/search_src_text")
+                (
+                    AppiumBy.ANDROID_UIAUTOMATOR,
+                    'new UiSelector().resourceIdMatches(".*id/search_src_text")',
+                )
             )
         )
         field.send_keys("Appium")
     with allure.step("Verify content found"):
         items = wait.until(
             EC.presence_of_all_elements_located(
-                (AppiumBy.ID, "org.wikipedia.alpha:id/page_list_item_title")
+                (
+                    AppiumBy.ANDROID_UIAUTOMATOR,
+                    'new UiSelector().resourceIdMatches(".*id/page_list_item_title")',
+                )
             )
         )
         assert len(items) > 0
