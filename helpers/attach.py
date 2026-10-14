@@ -6,6 +6,7 @@ note (visible in the report), it never masks the test result or skips quit().
 
 from __future__ import annotations
 
+import base64
 import time
 from collections.abc import Callable
 from urllib.parse import urlsplit
@@ -43,6 +44,15 @@ def screenshot(driver: WebDriver, name: str = "screenshot") -> None:
 
 def page_source(driver: WebDriver) -> None:
     _attach("page source", allure.attachment_type.XML, lambda: driver.page_source)
+
+
+def screen_recording(driver: WebDriver) -> None:
+    """stop_recording_screen must run while the session is alive (local routes)."""
+    _attach(
+        "video",
+        allure.attachment_type.MP4,
+        lambda: base64.b64decode(driver.stop_recording_screen()),
+    )
 
 
 def video(config: TestConfig, session_id: str) -> None:

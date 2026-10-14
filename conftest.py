@@ -28,7 +28,10 @@ FORWARD_LOCS = (
     (AppiumBy.ID, "org.wikipedia:id/fragment_onboarding_forward_button"),
     (AppiumBy.ID, "org.wikipedia.alpha:id/fragment_onboarding_forward_button"),
 )
+# Feed search entry point: stable puts it in the bottom nav (nav_tab_search /
+# desc "Search"), the 2017 alpha has a "Search Wikipedia" fake bar on top.
 SEARCH_LOCS = (
+    (AppiumBy.ID, "org.wikipedia:id/nav_tab_search"),
     (AppiumBy.ACCESSIBILITY_ID, "Search Wikipedia"),
     (
         AppiumBy.ANDROID_UIAUTOMATOR,
@@ -38,6 +41,37 @@ SEARCH_LOCS = (
         AppiumBy.ANDROID_UIAUTOMATOR,
         'new UiSelector().resourceIdMatches(".*id/search_container")',
     ),
+    (AppiumBy.ACCESSIBILITY_ID, "Search"),
+)
+# Search input: alpha has org.wikipedia.alpha:id/search_src_text, stable renders
+# a Compose text field exposed as a plain EditText.
+FIELD_LOCS = (
+    (
+        AppiumBy.ANDROID_UIAUTOMATOR,
+        'new UiSelector().resourceIdMatches(".*id/search_src_text")',
+    ),
+    (AppiumBy.CLASS_NAME, "android.widget.EditText"),
+)
+# First search tap on stable opens a "Search widget" promo sheet — close it.
+PROMO_LOCS = (
+    (AppiumBy.ACCESSIBILITY_ID, "Close"),
+    (AppiumBy.ANDROID_UIAUTOMATOR, 'new UiSelector().text("Close")'),
+)
+# Stable shows a "Search Wikipedia" hint; tapping it reveals the real EditText.
+HINT_LOCS = (
+    (AppiumBy.ACCESSIBILITY_ID, "Search Wikipedia"),
+    (AppiumBy.ANDROID_UIAUTOMATOR, 'new UiSelector().text("Search Wikipedia")'),
+)
+# Result rows: alpha ids vs stable Compose list entries containing the query.
+RESULT_LOCS = (
+    (
+        AppiumBy.ANDROID_UIAUTOMATOR,
+        'new UiSelector().resourceIdMatches(".*id/page_list_item_title")',
+    ),
+    (
+        AppiumBy.ANDROID_UIAUTOMATOR,
+        'new UiSelector().textContains("Appium")',
+    ),
 )
 # Modal system dialogs (ANR "isn't responding", old-app warning) hide the app.
 SYSTEM_DIALOG_IDS = (
@@ -45,6 +79,10 @@ SYSTEM_DIALOG_IDS = (
     "android:id/aerr_close",  # ANR — "Close app", fallback
     "android:id/button1",  # "OK" on the old-version warning
 )
+
+
+# Local routes record video on-device (screenrecord); farms publish mp4 files.
+LOCAL_VIDEO_HOSTS = {"emulator", "real"}
 
 
 @pytest.fixture(scope="session")
@@ -57,12 +95,21 @@ def driver(config: TestConfig) -> WebDriver:
     drv = create_driver(config)
     drv.implicitly_wait(0)
     session_id = drv.session_id
+    recording = False
+    if config.device_host in LOCAL_VIDEO_HOSTS:
+        try:
+            drv.start_recording_screen()
+            recording = True
+        except Exception:
+            pass
     try:
         _skip_wikipedia_onboarding(drv, config.timeout)
     except Exception:
         try:
             attach.screenshot(drv, "screenshot on setup failure")
             attach.page_source(drv)
+            if recording:
+                attach.screen_recording(drv)
         finally:
             drv.quit()
         attach.video(config, session_id)
@@ -71,6 +118,8 @@ def driver(config: TestConfig) -> WebDriver:
     try:
         attach.screenshot(drv)
         attach.page_source(drv)
+        if recording:
+            attach.screen_recording(drv)
     finally:
         drv.quit()
     attach.video(config, session_id)
@@ -86,6 +135,30 @@ def first_visible(driver: WebDriver, locators: tuple, timeout: float):
         except Exception as exc:
             last = exc
     raise last or TimeoutError(locators)
+
+
+def dismiss_if_present(driver: WebDriver, locators: tuple, timeout: float = 5) -> bool:
+    """One-shot promo/dialog closer — retries briefly, then gives up."""
+    deadline = time.time() + timeout
+    while time.time() < deadline:
+        if _click_first(driver, locators):
+            return True
+        time.sleep(0.5)
+    return False
+
+
+def has_elements(driver: WebDriver, locators: tuple) -> bool:
+    return any(driver.find_elements(by, value) for by, value in locators)
+
+
+def open_search_field(driver: WebDriver, timeout: float):
+    """Stable exposes the EditText only after tapping the Search Wikipedia hint."""
+    try:
+        return first_visible(driver, FIELD_LOCS, 8)
+    except Exception:
+        pass
+    first_visible(driver, HINT_LOCS, timeout).click()
+    return first_visible(driver, FIELD_LOCS, timeout)
 
 
 def _skip_wikipedia_onboarding(driver: WebDriver, timeout: float) -> None:

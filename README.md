@@ -55,12 +55,21 @@ stable build is for local emulator/real — locators in `conftest.py` and the te
 cover both packages (`org.wikipedia` / `org.wikipedia.alpha`).
 
 Emulator / real device — local Appium (`http://127.0.0.1:4723`, Appium 3 serves
-on `/`; for an old Appium 2 setup use `appium --base-path /wd/hub`):
+on `/`; for an old Appium 2 setup use `appium --base-path /wd/hub`). The server
+needs `ANDROID_HOME` exported and `platform-tools` on `PATH`:
 
 ```bash
 # pinned Wikipedia stable → ANDROID_APP (a local file path, not a URL)
 DEVICE_HOST=emulator ANDROID_APP=./wikipedia-50611-r-2026-10-07.apk pytest tests
+
+# a real device (USB debugging on) or a specific emulator — serial from `adb devices`
+DEVICE_HOST=real ANDROID_APP=./wikipedia-50611-r-2026-10-07.apk UDID=<serial> pytest tests
 ```
+
+Stable Wikipedia differs from the old alpha sample: search lives in the bottom
+nav (`nav_tab_search`), the first tap opens a "Search widget" promo sheet, and
+the input field is a Compose `EditText` that appears only after tapping the
+"Search Wikipedia" hint. `conftest.py` carries locator sets for both channels.
 
 BrowserStack (own account, like mobile-tests-22):
 
@@ -76,7 +85,7 @@ DEVICE_HOST=browserstack \
 |------|------|
 | screenshot + page source | teardown, while the session is alive |
 | screenshot on failure | `pytest_runtest_makereport` — the failing state, before teardown |
-| video (mp4) + report link | after `quit()`, polled from the farm / BrowserStack session API |
+| video (mp4) + report link | local: on-device screenrecord, stopped before `quit()`; farms: `/video/<session>.mp4` / BrowserStack session API, polled after `quit()` |
 
 Every attachment is best-effort: an artifact that can't be fetched shows up as a
 diagnostic note in the report and never masks the test's own result.
