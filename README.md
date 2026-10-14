@@ -18,27 +18,48 @@ Python twin of [qa-guru/mobile-tests-22](https://github.com/qa-guru/mobile-tests
 
 Jenkins: [python_mobile_tests](https://jenkins.qa.guru/job/python_mobile_tests/).
 
-## Local
+## Setup
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
+cp .env.example .env   # optional — defaults already point at the school farm
 ```
 
-Selenoid (same farm as [python_ui_tests](https://jenkins.qa.guru/job/python_ui_tests/)):
+All configuration is env-driven (`DEVICE_HOST`, `SELENOID_*`, `BROWSERSTACK_*`,
+`ANDROID_APP`, `PLATFORM_VERSION` …). Credentials travel as HTTP basic auth via
+`AppiumClientConfig` — never embedded in `APPIUM_URL`, so they don't leak into
+logs or the Allure report.
+
+## Routes
+
+Selenoid — school farm, Android only:
 
 ```bash
 DEVICE_HOST=selenoid pytest tests
 ```
 
-Jenkins uses the 2017 BrowserStack Wikipedia sample APK (same era as [mobile-tests-22](https://github.com/qa-guru/mobile-tests-22)), not the current Play Store build.
+- `browserName=android` + `browserVersion` (live catalog: `5.1`, `15.0`, `16.0`;
+  default `16.0`, override with `PLATFORM_VERSION`).
+- Selenoid routes on `browserName` — **don't** send `appium:appPackage` next to
+  it, Appium inside the container rejects the combination.
+- `selenoid:options` enables VNC + video. `conftest` downloads
+  `/video/<session>.mp4` after `driver.quit()` (the farm still muxes the file —
+  the attach helper polls until it's published).
 
-Emulator (Appium on [`/wd/hub`](http://127.0.0.1:4723/wd/hub)):
+The farm keeps the 20 MB 2017 Wikipedia **sample** APK
+(`org.wikipedia.alpha`) as its default app: the current stable APK is 84 MB and
+the farm's emulators die under that load (ANR storm, session timeouts). The
+stable build is for local emulator/real — locators in `conftest.py` and the test
+cover both packages (`org.wikipedia` / `org.wikipedia.alpha`).
+
+Emulator / real device — local Appium (`http://127.0.0.1:4723`, Appium 3 serves
+on `/`; for an old Appium 2 setup use `appium --base-path /wd/hub`):
 
 ```bash
-# Wikipedia alpha APK → ANDROID_APP
-DEVICE_HOST=emulator ANDROID_APP=./app-alpha-universal-release.apk pytest tests
+# pinned Wikipedia stable → ANDROID_APP (a local file path, not a URL)
+DEVICE_HOST=emulator ANDROID_APP=./wikipedia-50611-r-2026-10-07.apk pytest tests
 ```
 
 BrowserStack (own account, like mobile-tests-22):
@@ -48,3 +69,30 @@ DEVICE_HOST=browserstack \
   BROWSERSTACK_USERNAME=… BROWSERSTACK_ACCESS_KEY=… BROWSERSTACK_APP=bs://… \
   pytest tests
 ```
+
+## Attachments (Allure)
+
+| What | When |
+|------|------|
+| screenshot + page source | teardown, while the session is alive |
+| screenshot on failure | `pytest_runtest_makereport` — the failing state, before teardown |
+| video (mp4) + report link | after `quit()`, polled from the farm / BrowserStack session API |
+
+Every attachment is best-effort: an artifact that can't be fetched shows up as a
+diagnostic note in the report and never masks the test's own result.
+
+```bash
+pytest tests
+allure serve allure-results
+```
+
+## Notes
+
+- `onboarding` in `conftest.py` — the fixture walks the Wikipedia onboarding
+  (`Skip`/`Next`/old `fragment_onboarding_*` ids) and dismisses Android system
+  dialogs (ANR "Wait"/"OK") before the test starts.
+- `requirements.txt` is pinned; Appium-Python-Client ≥ 6 is required for
+  `AppiumClientConfig`.
+- macOS Python quirk: if `urlopen` fails with `CERTIFICATE_VERIFY_FAILED`,
+  that's the missing system CA bundle — this repo uses `requests` (bundled
+  certifi), so install requirements and the problem is gone.
