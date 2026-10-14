@@ -72,6 +72,9 @@ class TestConfig:
     browserstack_user: str = field(repr=False)
     browserstack_key: str = field(repr=False)
     browserstack_app: str = field(repr=False)
+    browserstack_platform: str = "Android"
+    wda_local_port: int = 8100
+    wda_allow_provisioning: bool = False
 
 
 def load_config() -> TestConfig:
@@ -105,4 +108,7 @@ def load_config() -> TestConfig:
         browserstack_user=_env("BROWSERSTACK_USERNAME") or _env("BROWSERSTACK_USER"),
         browserstack_key=_env("BROWSERSTACK_ACCESS_KEY") or _env("BROWSERSTACK_KEY"),
         browserstack_app=_env("BROWSERSTACK_APP"),
+        browserstack_platform=_env("BROWSERSTACK_PLATFORM", "Android"),
+        wda_local_port=int(_env("WDA_LOCAL_PORT", "8100")),
+        wda_allow_provisioning=_env("WDA_ALLOW_PROVISIONING", "false").lower() == "true",
     )

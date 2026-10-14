@@ -100,13 +100,19 @@ def _selenoid(config: TestConfig) -> UiAutomator2Options:
     return options
 
 
-def _browserstack(config: TestConfig) -> UiAutomator2Options:
+def _browserstack(config: TestConfig) -> UiAutomator2Options | XCUITestOptions:
     if not config.browserstack_user or not config.browserstack_key:
         raise ValueError("Set BROWSERSTACK_USERNAME and BROWSERSTACK_ACCESS_KEY")
     app = config.browserstack_app or config.android_app
     if not app:
         raise ValueError("Set BROWSERSTACK_APP=bs://…")
-    options = _android_base(config, with_package=True)
+    platform = config.browserstack_platform.lower()
+    if platform == "ios":
+        options = _ios_base(config)
+    elif platform == "android":
+        options = _android_base(config, with_package=True)
+    else:
+        raise ValueError("BROWSERSTACK_PLATFORM: Android or iOS")
     options.app = app
     options.device_name = config.device_name
     options.platform_version = config.platform_version
@@ -159,5 +165,9 @@ def _ios_real(config: TestConfig) -> XCUITestOptions:
     options = _ios_base(config)
     options.udid = config.udid
     options.set_capability("appium:bundleId", config.bundle_id)
+    options.set_capability("appium:wdaLocalPort", config.wda_local_port)
+    options.set_capability(
+        "appium:allowProvisioningDeviceRegistration", config.wda_allow_provisioning
+    )
     options.set_capability("appium:xcodeSigningId", "iPhone Developer")
     return options
