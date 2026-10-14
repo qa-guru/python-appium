@@ -67,6 +67,8 @@ class TestConfig:
     udid: str
     ios_app: str
     bundle_id: str
+    xcode_org_id: str
+    wda_bundle_id: str
     selenoid_user: str
     selenoid_password: str = field(repr=False)
     browserstack_user: str = field(repr=False)
@@ -103,6 +105,8 @@ def load_config() -> TestConfig:
         udid=_env("UDID"),
         ios_app=_env("IOS_APP"),
         bundle_id=_env("BUNDLE_ID", "org.wikimedia.wikipedia"),
+        xcode_org_id=_env("XCODE_ORG_ID"),
+        wda_bundle_id=_env("WDA_BUNDLE_ID", "io.appium.WebDriverAgentRunner"),
         selenoid_user=selenoid_user,
         selenoid_password=selenoid_password,
         browserstack_user=_env("BROWSERSTACK_USERNAME") or _env("BROWSERSTACK_USER"),

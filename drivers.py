@@ -162,6 +162,11 @@ def _ios_real(config: TestConfig) -> XCUITestOptions:
     """App Store Wikipedia via bundleId; WDA must be signed (xcodeOrgId etc.)."""
     if not config.udid:
         raise ValueError("Set UDID to the iPhone's UDID (xcrun xctrace list devices)")
+    if not config.xcode_org_id:
+        raise ValueError(
+            "Set XCODE_ORG_ID to your Apple team id — Xcode Settings → Accounts "
+            "(a free Personal Team works)"
+        )
     options = _ios_base(config)
     options.udid = config.udid
     options.set_capability("appium:bundleId", config.bundle_id)
@@ -169,5 +174,8 @@ def _ios_real(config: TestConfig) -> XCUITestOptions:
     options.set_capability(
         "appium:allowProvisioningDeviceRegistration", config.wda_allow_provisioning
     )
+    options.set_capability("appium:xcodeOrgId", config.xcode_org_id)
     options.set_capability("appium:xcodeSigningId", "iPhone Developer")
+    options.set_capability("appium:updatedWDABundleId", config.wda_bundle_id)
+    options.set_capability("appium:showXcodeLog", True)
     return options

@@ -2,7 +2,7 @@
 
 Учебный проект QA.GURU: поиск в Wikipedia на **pytest + Appium-Python-Client** и отчёт Allure. Без Selene.
 
-Ветка `selenoid` продолжает примеры [`main`](https://github.com/qa-guru/python-appium/tree/main) → [`driver`](https://github.com/qa-guru/python-appium/tree/driver) → [`attachments`](https://github.com/qa-guru/python-appium/tree/attachments). В Jenkins используется job `python_mobile_tests`.
+Ветка `browserstack-ios` добавляет iOS-маршруты к `selenoid`, которая продолжает примеры [`main`](https://github.com/qa-guru/python-appium/tree/main) → [`driver`](https://github.com/qa-guru/python-appium/tree/driver) → [`attachments`](https://github.com/qa-guru/python-appium/tree/attachments). В Jenkins используется job `python_mobile_tests`.
 
 ## Материалы занятия
 
@@ -15,9 +15,9 @@
 - Создание Android-сессии на эмуляторе, телефоне, Selenoid и BrowserStack.
 - Выбор локального устройства через `UDID`.
 - Screenshot, XML страницы и видео в Allure.
-- Отдельные настройки драйвера для iOS Simulator и iPhone.
+- Настройки iOS-драйвера для BrowserStack, Simulator и настоящего iPhone.
 
-**Сам тест поиска пока написан для Android.** Он использует Android-локаторы и UiSelector, в том числе при прохождении первого запуска приложения. Наличие iOS-драйвера не делает этот сценарий кроссплатформенным: для iOS нужны свои локаторы и действия. Раздел iOS ниже описывает подготовку окружения, а не готовый запуск `pytest tests` на iPhone.
+**Тест поиска кроссплатформенный.** `conftest.py` выбирает Android-локаторы или iOS predicate/accessibility-id по платформе сессии. iOS-прогоны проверены на BrowserStack, Simulator и настоящем iPhone. Это smoke-тест: ввод `Appium` и наличие результатов; открытие статьи он не проверяет.
 
 ## Быстрая навигация
 
@@ -25,7 +25,7 @@
 - [Android SDK: macOS, Linux и Windows](#2-подготовить-android-sdk)
 - [Appium и Inspector](#3-установить-appium-и-inspector)
 - [Запуск Android: локально, Selenoid, BrowserStack](#4-запустить-android-тест)
-- [Подготовка iOS: Simulator и iPhone](#5-подготовить-ios)
+- [Запуск iOS: BrowserStack, Simulator и iPhone](#5-запустить-ios-тест)
 - [Вложения и отчёт Allure](#6-посмотреть-результаты-в-allure)
 - [Разбор ошибок](#если-тест-не-запускается)
 - [Проверка перед занятием](#перед-занятием)
@@ -224,9 +224,9 @@ Selenoid выбирает контейнер по `browserName=android` и `brow
 DEVICE_HOST=browserstack pytest tests
 ```
 
-`BROWSERSTACK_APP` — идентификатор загруженной сборки вида `bs://…`. На своём iPhone можно запускать App Store приложение по bundleId, но это не заменяет загрузку приложения для BrowserStack App Automate.
+`BROWSERSTACK_APP` — идентификатор загруженной сборки вида `bs://…`. По умолчанию `BROWSERSTACK_PLATFORM=Android`; для iOS используйте отдельную команду ниже. На своём iPhone можно запускать App Store приложение по bundleId, но это не заменяет загрузку приложения для BrowserStack App Automate.
 
-## 5. Подготовить iOS
+## 5. Запустить iOS-тест
 
 Для локального iOS нужны Mac, полный Xcode, установленный runtime и XCUITest. Лицензию и запросы доверия подтверждает владелец компьютера/телефона.
 
@@ -242,6 +242,47 @@ appium driver doctor xcuitest
 
 Тест `tests/test_search.py` кроссплатформенный: `conftest.py` выбирает набор локаторов по `platformName` сессии (UiAutomator на Android → predicate/accessibility-id на iOS). iOS-ветка проверена на iPhone 17 Simulator (iOS 26.5) — onboarding с кнопками `App Onboarding * Button`, поиск через Tab Bar `Search`, поле `XCUIElementTypeSearchField`.
 
+### BrowserStack iOS
+
+Нужна `.ipa`, собранная для физического устройства, и App Automate Username / Access Key в `.env` или окружении. Выбирайте устройство и OS из [каталога BrowserStack](https://www.browserstack.com/docs/app-automate/api-reference/appium/devices), учитывая deployment target приложения: у проверенной Wikipedia минимум iOS `17.6`.
+
+При загрузке Wikipedia обязательно передайте `ios_app_groups_support=true`: BrowserStack переподписывает приложение, а `MWKDataStore` требует доступ к app group. Без её entitlement приложение может упасть при запуске. [Документация переподписи](https://www.browserstack.com/docs/app-automate/appium/resign-ios-apps).
+
+Из корня проекта, с активированным venv, загрузите IPA; замените `/path/to/Wikipedia.ipa` своим путём:
+
+```bash
+python - <<'PY'
+import requests
+from config import load_config
+
+config = load_config()
+with open("/path/to/Wikipedia.ipa", "rb") as app:
+    response = requests.post(
+        "https://api-cloud.browserstack.com/app-automate/upload",
+        auth=(config.browserstack_user, config.browserstack_key),
+        files={"file": ("Wikipedia.ipa", app, "application/octet-stream")},
+        data={"ios_app_groups_support": "true"},
+        timeout=120,
+    )
+response.raise_for_status()
+print(response.json()["app_url"])
+PY
+```
+
+Полученный `bs://…` задайте в `BROWSERSTACK_APP`. Credentials в команды не подставляйте. Переменные процесса имеют приоритет над `.env`; при смене учётки уберите старые exports `BROWSERSTACK_USERNAME` / `BROWSERSTACK_ACCESS_KEY` и их aliases `BROWSERSTACK_USER` / `BROWSERSTACK_KEY`.
+
+Проверенный вариант запуска — iPhone 16 Pro Max / iOS 27. Доступность этой конфигурации сверяйте с каталогом:
+
+```bash
+RUN_ID="$(date +%Y%m%d-%H%M%S)"
+DEVICE_HOST=browserstack BROWSERSTACK_PLATFORM=iOS \
+APPIUM_URL=https://hub.browserstack.com/wd/hub \
+DEVICE_NAME="iPhone 16 Pro Max" PLATFORM_VERSION=27 \
+pytest tests/test_search.py --alluredir="allure-results/ios-browserstack-$RUN_ID"
+```
+
+Локальный Appium и подпись WDA вашей Personal Team для BS не нужны. `.app` для Simulator не заменяет device `.ipa`.
+
 ### Simulator
 
 Нужна `.app`, собранная для `iphonesimulator`, а не device `.ipa`. Для Simulator не требуется платная Apple Developer учётная запись.
@@ -252,8 +293,10 @@ appium driver doctor xcuitest
 
 ```bash
 # проект требует генерируемый файл конфигурации (scripts/setup_bundle_id делает то же самое)
-printf 'DEVELOPMENT_TEAM=AKK7J2GV64\nSIGNING_DISAMBIGUATOR=\n' \
-  > Configurations/OpenSourceDebug.xcconfig
+if [ ! -f Configurations/OpenSourceDebug.xcconfig ]; then
+    printf 'DEVELOPMENT_TEAM=AKK7J2GV64\nSIGNING_DISAMBIGUATOR=\n' \
+      > Configurations/OpenSourceDebug.xcconfig
+fi
 
 xcodebuild \
   -project Wikipedia.xcodeproj \
@@ -267,15 +310,20 @@ xcodebuild \
 
 Не добавляйте `CODE_SIGNING_ALLOWED=NO`: без подписи в бинарь не попадают entitlements, `group.org.wikimedia.wikipedia` не выделяется, и приложение падает при запуске в `MWKDataStore` (SIGABRT на nil-пути контейнера). Для симулятора достаточно «Sign to Run Locally».
 
+После смены bundle ID / app group или отключения extensions используйте свежий `derivedDataPath`. В старой `.app` могут остаться `.appex` с прежними IDs, что приводит к `Mismatched bundle IDs` при установке. Не удаляйте чужие артефакты ради пересборки.
+
 Проверьте архитектуру и фактический путь к полученной `.app`. Затем задайте настройки; значения в угловых скобках замените данными из Xcode/simctl:
 
 ```bash
 # simulator — needs a simulator build of the app (xcodebuild -sdk iphonesimulator)
 export DEVICE_HOST=ios_simulator
+export APPIUM_URL="<verified-local-appium-endpoint>"
 export IOS_APP="./Wikipedia.app"
 export UDID="<simulator-udid>"
 export DEVICE_NAME="<simulator-name>"
 export PLATFORM_VERSION="<ios-version>"
+RUN_ID="$(date +%Y%m%d-%H%M%S)"
+pytest tests/test_search.py --alluredir="allure-results/ios-simulator-$RUN_ID"
 ```
 
 `DEVICE_NAME` и `PLATFORM_VERSION` задайте явно: их общие значения по умолчанию рассчитаны на Android. Переменная `PLATFORM` в этой ветке не используется; платформа выбирается через `DEVICE_HOST`.
@@ -297,13 +345,28 @@ export PLATFORM_VERSION="<ios-version>"
 ```bash
 # real iPhone — App Store build by bundleId, WDA must be signed for the device
 export DEVICE_HOST=ios_real
+export APPIUM_URL="<verified-local-appium-endpoint>"
 export UDID="<iphone-udid>"
 export DEVICE_NAME="<iphone-name>"
 export PLATFORM_VERSION="<ios-version>"
 export BUNDLE_ID=org.wikimedia.wikipedia
+export XCODE_ORG_ID="<apple-team-id>"
+export WDA_BUNDLE_ID="<unique-wda-bundle-id>"
+export WDA_LOCAL_PORT="<checked-free-port>"
+export WDA_ALLOW_PROVISIONING=false
+RUN_ID="$(date +%Y%m%d-%H%M%S)"
+pytest tests/test_search.py --alluredir="allure-results/ios-real-$RUN_ID"
 ```
 
-`BUNDLE_ID` здесь обязателен: в текущем `config.py` по умолчанию стоит `org.wikipedia`, что не совпадает с App Store приложением. В примерах предустановленного приложения Appium рекомендует `noReset=True`; в текущем `_ios_real` эта настройка явно не выставлена. Согласуйте состояние приложения до первого запуска, особенно на личном телефоне.
+Замените значения в угловых скобках своими. `XCODE_ORG_ID` и `UDID` обязательны. Default `BUNDLE_ID` — `org.wikimedia.wikipedia`; для собственной подписанной сборки задайте её ID явно. Проверенный scratch-вариант использовал `com.qaguru.wikipedia` и app group `group.com.qaguru.wikipedia`.
+
+`WDA_BUNDLE_ID` должен быть доступен вашей Apple Team: профиль создаётся для runner с суффиксом `.xctrunner`. `WDA_LOCAL_PORT` по умолчанию `8100`; если порт занят, согласуйте другой свободный порт через реестр стендов, а не останавливайте чужой процесс. В проверенном real-прогоне использовался `8101`.
+
+`WDA_ALLOW_PROVISIONING=false` по умолчанию. Только с разрешения владельца Team включайте `WDA_ALLOW_PROVISIONING=true`: это передаёт `allowProvisioningDeviceRegistration` и разрешает Xcode создать/обновить provisioning profile и зарегистрировать указанное устройство. Personal Team выдаёт профили на [7 дней](https://developer.apple.com/help/account/basics/about-your-developer-account/); после истечения потребуется обновить подпись.
+
+Держите iPhone разблокированным с включённым экраном до конца прогона. Если iOS показывает Untrusted Developer, владелец телефона должен подтвердить доверие в Settings → General → VPN & Device Management. Если предложено Allow & Restart, завершите этот шаг вручную.
+
+В примерах предустановленного приложения Appium рекомендует `noReset=True`; в текущем `_ios_real` эта настройка явно не выставлена. Согласуйте состояние приложения до первого запуска, особенно на личном телефоне.
 
 ## 6. Посмотреть результаты в Allure
 
@@ -351,7 +414,7 @@ allure generate "allure-results/$RUN_ID" \
 - Подготовьте конкретный APK и проверьте его SHA-256.
 - Сверьте host, base path и доступ к Appium/Selenoid.
 - Проверьте screenshot, XML и видео после обычного прогона и контролируемого падения.
-- Для iOS отдельно подготовьте `.app` или iPhone/WDA и iOS-локаторы. Сейчас это не готовый Android-тест на другой платформе.
+- Для iOS подготовьте simulator `.app`, установленное приложение / подписанный WDA на iPhone или device `.ipa` для BS с поддержкой app groups. Запускайте тот же `tests/test_search.py` с настройками соответствующего маршрута.
 - Сверьте программу и домашнее задание с GetCourse: при подготовке этих материалов доступ к страницам уроков требовал авторизации.
 
 Для проверки или правки самих материалов мобильные сессии запускать не нужно. HTML работает без HTTP-сервера; PDF — печатная версия слайдов, заметки преподавателя остаются только в HTML.
