@@ -240,7 +240,7 @@ appium driver doctor xcuitest
 
 Проверьте [совместимость Xcode, macOS, iOS и XCUITest](https://appium.github.io/appium-xcuitest-driver/latest/getting-started/system-requirements/).
 
-**Пока это подготовка драйвера.** Android-тест `tests/test_search.py` и его onboarding нельзя запустить на iOS простой сменой `DEVICE_HOST`. Перед полноценным iOS-прогоном нужно заменить Android-локаторы, пройти первый запуск приложения и проверить собственный сценарий поиска.
+Тест `tests/test_search.py` кроссплатформенный: `conftest.py` выбирает набор локаторов по `platformName` сессии (UiAutomator на Android → predicate/accessibility-id на iOS). iOS-ветка проверена на iPhone 17 Simulator (iOS 26.5) — onboarding с кнопками `App Onboarding * Button`, поиск через Tab Bar `Search`, поле `XCUIElementTypeSearchField`.
 
 ### Simulator
 
@@ -248,18 +248,24 @@ appium driver doctor xcuitest
 
 В [Wikipedia iOS](https://github.com/wikimedia/wikipedia-ios) используются проект `Wikipedia.xcodeproj` и scheme `Wikipedia`. Сборку лучше подготовить до занятия. Upstream `scripts/setup` устанавливает SwiftLint/ClangFormat и Git hook; сначала прочитайте скрипт, не запускайте его автоматически на каждом рабочем месте.
 
-Пример команды в подготовленной копии исходников:
+Пример команд в подготовленной копии исходников (проверено: Xcode 27.0, iPhone 17 / iOS 26.5):
 
 ```bash
+# проект требует генерируемый файл конфигурации (scripts/setup_bundle_id делает то же самое)
+printf 'DEVELOPMENT_TEAM=AKK7J2GV64\nSIGNING_DISAMBIGUATOR=\n' \
+  > Configurations/OpenSourceDebug.xcconfig
+
 xcodebuild \
   -project Wikipedia.xcodeproj \
   -scheme Wikipedia \
   -configuration Debug \
   -sdk iphonesimulator \
-  -destination 'generic/platform=iOS Simulator' \
   -derivedDataPath ./build \
-  CODE_SIGNING_ALLOWED=NO
+  build
+# → build/Products/Debug-iphonesimulator/Wikipedia.app
 ```
+
+Не добавляйте `CODE_SIGNING_ALLOWED=NO`: без подписи в бинарь не попадают entitlements, `group.org.wikimedia.wikipedia` не выделяется, и приложение падает при запуске в `MWKDataStore` (SIGABRT на nil-пути контейнера). Для симулятора достаточно «Sign to Run Locally».
 
 Проверьте архитектуру и фактический путь к полученной `.app`. Затем задайте настройки; значения в угловых скобках замените данными из Xcode/simctl:
 

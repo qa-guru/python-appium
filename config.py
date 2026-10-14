@@ -99,7 +99,7 @@ def load_config() -> TestConfig:
         device_name=_env("DEVICE_NAME", "Google Pixel 3" if host == "browserstack" else "android"),
         udid=_env("UDID"),
         ios_app=_env("IOS_APP"),
-        bundle_id=_env("BUNDLE_ID", "org.wikipedia"),
+        bundle_id=_env("BUNDLE_ID", "org.wikimedia.wikipedia"),
         selenoid_user=selenoid_user,
         selenoid_password=selenoid_password,
         browserstack_user=_env("BROWSERSTACK_USERNAME") or _env("BROWSERSTACK_USER"),
