@@ -15,6 +15,7 @@ from helpers import attach
 
 # iOS locator sets — accessibility-id / predicates instead of UiSelector.
 IOS_SEARCH_LOCS = (
+    (AppiumBy.ACCESSIBILITY_ID, "Search Tab Button"),
     # current iOS app: Search is a bottom tab bar item (name == "Search")
     (AppiumBy.IOS_PREDICATE, 'name == "Search" AND type == "XCUIElementTypeButton"'),
     (AppiumBy.ACCESSIBILITY_ID, "Search"),
