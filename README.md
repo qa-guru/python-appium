@@ -242,13 +242,13 @@ appium driver doctor xcuitest
 
 Тест `tests/test_search.py` кроссплатформенный: `conftest.py` выбирает набор локаторов по `platformName` сессии (UiAutomator на Android → predicate/accessibility-id на iOS). iOS-ветка проверена на iPhone 17 Simulator (iOS 26.5) — onboarding с кнопками `App Onboarding * Button`, поиск через Tab Bar `Search`, поле `XCUIElementTypeSearchField`.
 
-### Закреплённая Wikipedia fixture
+### Закреплённая Wikipedia light-сборка
 
-Исходники учебной сборки живут в [qa-guru/wikipedia-ios, ветка qa-guru-fixture](https://github.com/qa-guru/wikipedia-ios/tree/qa-guru-fixture), отдельно от тестов. Для повторов используем Release **[qaguru-ios-fixture-v1.0.0](https://github.com/qa-guru/wikipedia-ios/releases/tag/qaguru-ios-fixture-v1.0.0)**, а не `latest`:
+Исходники учебной сборки живут в [qa-guru/wikipedia-ios, ветка light](https://github.com/qa-guru/wikipedia-ios/tree/light), отдельно от тестов. От upstream она отличается только удалённым функционалом, который не подписать бесплатным Apple-аккаунтом: пуши, Associated Domains, Apple Pay, Time Sensitive и extensions; код приложения не менялся. Для повторов используем Release **[light-v1.0.0](https://github.com/qa-guru/wikipedia-ios/releases/tag/light-v1.0.0)**, а не `latest`:
 
-- [Wikipedia-browserstack.ipa](https://github.com/qa-guru/wikipedia-ios/releases/download/qaguru-ios-fixture-v1.0.0/Wikipedia-browserstack.ipa) — ARM64 device-сборка с ad-hoc подписью для переподписи в BS; не устанавливается напрямую на real iPhone.
-- [Wikipedia-simulator.app.zip](https://github.com/qa-guru/wikipedia-ios/releases/download/qaguru-ios-fixture-v1.0.0/Wikipedia-simulator.app.zip) — universal ARM64/x86_64 `.app`; runtime проверен на ARM64, x86_64 не проверен.
-- [SHA256SUMS.txt](https://github.com/qa-guru/wikipedia-ios/releases/download/qaguru-ios-fixture-v1.0.0/SHA256SUMS.txt) и [LICENSE.txt](https://github.com/qa-guru/wikipedia-ios/releases/download/qaguru-ios-fixture-v1.0.0/LICENSE.txt).
+- [Wikipedia-browserstack.ipa](https://github.com/qa-guru/wikipedia-ios/releases/download/light-v1.0.0/Wikipedia-browserstack.ipa) — ARM64 device-сборка с ad-hoc подписью для переподписи в BS; не устанавливается напрямую на real iPhone.
+- [Wikipedia-simulator.app.zip](https://github.com/qa-guru/wikipedia-ios/releases/download/light-v1.0.0/Wikipedia-simulator.app.zip) — universal ARM64/x86_64 `.app`; runtime проверен на ARM64, x86_64 не проверен.
+- [SHA256SUMS.txt](https://github.com/qa-guru/wikipedia-ios/releases/download/light-v1.0.0/SHA256SUMS.txt) и [LICENSE.txt](https://github.com/qa-guru/wikipedia-ios/releases/download/light-v1.0.0/LICENSE.txt).
 
 В этих артефактах нет персональных provisioning profiles или Apple signing certificates. Bundle ID — `com.qaguru.wikipedia`, app group — `group.com.qaguru.wikipedia`, минимум iOS — `17.6`. Real-сборка подписывается своей Team из исходников fork; семидневное ограничение Personal Team этим Release не отменяется.
 
@@ -265,9 +265,9 @@ SHA-256 закреплён здесь независимо от скачивае
 FIXTURE_DIR="${TMPDIR:-/tmp}/qaguru-wikipedia-ios-v1.0.0"
 mkdir -p "$FIXTURE_DIR"
 curl --fail --location --output "$FIXTURE_DIR/Wikipedia-browserstack.ipa" \
-  https://github.com/qa-guru/wikipedia-ios/releases/download/qaguru-ios-fixture-v1.0.0/Wikipedia-browserstack.ipa
+  https://github.com/qa-guru/wikipedia-ios/releases/download/light-v1.0.0/Wikipedia-browserstack.ipa
 curl --fail --location --output "$FIXTURE_DIR/Wikipedia-simulator.app.zip" \
-  https://github.com/qa-guru/wikipedia-ios/releases/download/qaguru-ios-fixture-v1.0.0/Wikipedia-simulator.app.zip
+  https://github.com/qa-guru/wikipedia-ios/releases/download/light-v1.0.0/Wikipedia-simulator.app.zip
 printf '%s  %s\n' \
   28a2102a2f52d0e92de6da410cdc71c02399767c54989d6ce671ef2075f41b3b "$FIXTURE_DIR/Wikipedia-browserstack.ipa" \
   8492824f7ca580d00167decd5631733778ca78bbedd86b71a6764bb761b29791 "$FIXTURE_DIR/Wikipedia-simulator.app.zip" \
